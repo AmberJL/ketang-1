@@ -59,4 +59,18 @@ public class MessageServiceimp implements MessageService{
 		return data;
 	}
 
+	@Override
+	public void saveMessage(messageData message) {
+		// TODO Auto-generated method stub
+		System.out.println(message.getContent());
+		message_table ms = new message_table();
+		ms.setContent(message.getContent());
+		ms.setFrom_user_id(message.getFrom_user_id());
+		ms.setTime(message.getTime());
+		ms.setState(message.getState());
+		ms.setTo_user_id(message.getTo_user_id());
+		
+		this.messageRep.save(ms);
+	}
+
 }

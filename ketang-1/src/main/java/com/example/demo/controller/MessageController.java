@@ -39,4 +39,5 @@ public class MessageController {
 		//全部历史消息
 		return this.messageService.allHistoryMessage(msd.getTo_user_id());
 	}
+	
 }

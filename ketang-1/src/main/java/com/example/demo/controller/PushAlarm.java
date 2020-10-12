@@ -1,4 +1,4 @@
-package com.example.demo.c;
+package com.example.demo.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,30 +14,81 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.example.demo.Service.MessageService;
 import com.example.demo.Service.UserService;
+import com.example.demo.c.RedisClient;
+import com.example.demo.data.messageData;
 
 @Component//被spring容器管理
 @Order(1)//如果多个自定义ApplicationRunner，用来标明执行顺序
 public class PushAlarm implements ApplicationRunner {             //服务启动后自动加载该类
 
 	@Autowired
-    UserService userService;
+    static UserService userService;
+	private static MessageService message;
+    @Autowired
+    public void setMyServiceImpl(MessageService myService){
+    	PushAlarm.message = myService;
+    }
+	
 	 @Override
 	    public void run(ApplicationArguments applicationArguments) throws Exception {
 	        System.out.println("-------------->" + "项目启动，now=" + new Date());
-	        myTimer();
+	        myTimer();//心跳线程
+	        messageQueue();
 	    }
+	 	public static void messageQueue() {
+	 		Runnable run = new Runnable() {
 
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					//之前注释的
+					while(true) {
+						RedisClient redisClient = new RedisClient();
+						List<String> dataList = redisClient.blpopHdasAlertList();
+						System.out.println(" size:"+dataList.size());
+						if(dataList!=null && dataList.size()>0){
+							String message = dataList.get(1);
+							System.out.println("消息队列："+message);
+							JSONObject res = JSONObject.parseObject(message);
+			        	   messageData ms = new messageData();
+			        	   
+			        	   ms.setContent((String)res.get("content"));
+			        	   ms.setFrom_user_id((String)res.get("from_user_id"));
+			        	   ms.setState(0);
+			        	   ms.setTime(Long.parseLong((String)res.get("time")));
+			        	   ms.setTo_user_id((String)res.get("to_user_id"));
+			        	   PushAlarm.this.message.saveMessage(ms);
+					}
+					
+//						Iterator<Entry<Session,String>> iterator = WebSocketServer.map.entrySet().iterator();
+//						Iterator<String> set = WebSocketServer.map.values().iterator();
+//						while (set.hasNext()) {
+//							System.out.println("登录的账户："+set.next());
+//						}
+//						WebSocketServer webSocketServer = new WebSocketServer();
+//						SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//						System.out.println("推送时间："+format.format(new Date()));
+//						if(type == 2)
+//						{
+//							while (iterator.hasNext()) {
+//								Entry<Session,String> entry = iterator.next();
+//								Session session = entry.getKey();
+//								String userPower = entry.getValue();
+//								System.out.println("推送内容："+message+" 退送用户："+userPower);
+//								webSocketServer.sendMessage(session,message);
+//							}
+//						}
+						
+					}
+				}
+	 			
+	 		};
+	 		Thread n = new Thread(run);
+	 		n.start();
+	 	}
 	    public static void myTimer(){
-	    	
-	    	//定时任务
-	        /*Timer timer = new Timer();
-	        timer.schedule(new TimerTask() {
-	            @Override
-	            public void run() {
-	                System.out.println("------定时任务--------");
-	            }
-	        }, 0, 1000*60);*/
 	    	
 	    	//阻塞队列
 	    	Runnable run = new Runnable() {

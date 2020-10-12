@@ -11,4 +11,6 @@ public interface MessageService {
 	public List<messageData> historyMessage(String user,long time);
 	//全部历史消息
 	public List<messageData> allHistoryMessage(String user);
+	//发消息存数据库
+	public void saveMessage(messageData message);
 }

@@ -98,9 +98,9 @@ public class UserServiceImp implements UserService {
 			t.put("key", user.getKey());
 			t.put("value", user.getUser_phone());
 			String phone = AES.decode(t);
-			System.out.println("phone:"+phone+"final: "+ pwd);
+			System.out.println("修改密码phone:"+phone+"final: "+ pwd);
 			this.userRespository.forget_pwd(pwd, phone);
-			return 200;
+			return 201;
 		}catch(Exception e) {
 			e.printStackTrace();
 			return 400;
