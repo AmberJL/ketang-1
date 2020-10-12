@@ -23,7 +23,7 @@ public class TeacherServiceimp implements TeacherService {
 
     @Override
 
-    public void insertTeacher(int id, String name, String sex, String department, int school_id, String phone) {
+    public void insertTeacher( String name, String sex, String department, int school_id, String phone) {
         teacher_table teacherTable = new teacher_table();
 
         try{
@@ -34,12 +34,11 @@ public class TeacherServiceimp implements TeacherService {
                 System.out.println("身份存在问题！");
             }
             else {
-                teacherTable.setTeacher_id(id);
                 teacherTable.setTeacher_name(name);
                 teacherTable.setSex(sex);
                 teacherTable.setDepartment(department);
-                teacherTable.setSchoolTable(schoolTable);
-                teacherTable.setUserTable(userTable);
+                teacherTable.setSchool_id(school_id);
+                teacherTable.setPhone(phone);
                 teacherRespository.save(teacherTable);
                 System.out.println("插入教师表成功！");
             }

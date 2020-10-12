@@ -30,10 +30,10 @@ public class testUpdate {
         String pwd = "123";
         //userService.Testlogin(phone, pwd);
         //adminService.InsertAdmin(1,"zzz","123","12345");
-        teacherService.insertTeacher(1,"zzz","B","软件工程",1,"12");
+     /*   teacherService.insertTeacher(1,"zzz","B","软件工程",1,"12");
         teacherService.insertTeacher(2,"zzh","G","软件工程",2,"123");
         teacherService.insertTeacher(3,"zzh","G","软件工程",1,"123");
-        studentService.insertStudent(123,"zzh","B","2017",1,"12");
+        studentService.insertStudent(123,"zzh","B","2017",1,"12");*/
         return "查询成功";
     }
 }

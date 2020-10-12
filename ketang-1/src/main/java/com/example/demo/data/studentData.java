@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class  studentData {
-    private int stu_id;
     private String stu_name;
     private String sex;
     private String year;

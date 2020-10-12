@@ -7,15 +7,14 @@ import javax.persistence.*;
 @Entity
 @Table(name="course_log_table")
 @Data
-
+@IdClass(course_log_primaryKey.class)
 public class course_log_table {
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @EmbeddedId
+    private course_log_primaryKey primaryKey;
     @Id
-    private int id;
-    @ManyToOne
-    @JoinColumn(name = "course_id",referencedColumnName = "course_id",nullable = false)
-    private course_table courseTable;
-    @ManyToOne
-    @JoinColumn(name = "stu_id",referencedColumnName = "stu_id",nullable = false)
-    private student_table studentTable;
+    @Column(name = "course_id")
+    private String course_id;
+    @Id
+    @Column
+    private String student_phone;
 }
