@@ -14,5 +14,7 @@ public class course_table {
     private String course_name;
     @Column(nullable = false)
     private String teacher_phone;
+    @Column
+    private String course_introduce;
 
 }
