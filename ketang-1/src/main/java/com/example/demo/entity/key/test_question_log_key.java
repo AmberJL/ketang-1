@@ -32,7 +32,14 @@ public class test_question_log_key implements Serializable{
 	@Column(name = "stu_phone",insertable=false,updatable=false)
 	private String stuphone;
 	
+	public test_question_log_key() {}
 	
+	public test_question_log_key(String courseid,String fbtime,int tihao,String stuphone) {
+		this.courseid=courseid;
+		this.fbtime=fbtime;
+		this.tihao=tihao;
+		this.stuphone=stuphone;
+	}
 	
 	public String getCourseid() {
 		return courseid;

@@ -27,7 +27,13 @@ public class course_time_phone_key implements Serializable{
 	@Column(name = "stu_phone",insertable=false,updatable=false)
 	private String stuphone;
 	
+	public course_time_phone_key() {}
 	
+	public course_time_phone_key(String courseid,String fbtime,String stuphone) {
+		this.courseid=courseid;
+		this.fbtime=fbtime;
+		this.stuphone=stuphone;
+	}
 
 	public String getCourseid() {
 		return courseid;

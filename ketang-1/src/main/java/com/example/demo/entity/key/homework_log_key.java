@@ -13,26 +13,29 @@ public class homework_log_key implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	//课程id
-	@Id
 	@Column(name = "course_id",insertable=false,updatable=false)
 	private String courseid;
 	
 	//发布时间
-	@Id
 	@Column(name = "fb_time",insertable=false,updatable=false)
 	private String fbtime;
 	
 	//学生手机号
-	@Id
 	@Column(name = "stu_phone",insertable=false,updatable=false)
 	private String stuphone;
 	
 	//服务器文件路径
-	@Id
 	@Column(name = "file_path",insertable=false,updatable=false)
 	private String filepath;
 
+	public homework_log_key() {}
 	
+	public homework_log_key(String courseid,String fbtime,String stuphone,String filepath) {
+		this.courseid=courseid;
+		this.fbtime=fbtime;
+		this.stuphone=stuphone;
+		this.filepath=filepath;
+	}
 	
 	public String getCourseid() {
 		return courseid;

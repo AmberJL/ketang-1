@@ -22,7 +22,12 @@ public class sharedfile_key implements Serializable{
 	@Column(name = "file_path",insertable=false,updatable=false)
 	private String filepath;
 
+	public sharedfile_key() {}
 	
+	public sharedfile_key(String courseid,String filepath) {
+		this.courseid=courseid;
+		this.filepath=filepath;
+	}
 	
 	public String getCourseid() {
 		return courseid;

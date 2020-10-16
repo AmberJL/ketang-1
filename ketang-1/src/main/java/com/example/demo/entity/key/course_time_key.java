@@ -22,7 +22,12 @@ public class course_time_key implements Serializable{
 	@Column(name = "fb_time",insertable=false,updatable=false)
 	private String fbtime;
 
+	public course_time_key() {}
 	
+	public course_time_key(String courseid,String fbtime) {
+		this.courseid=courseid;
+		this.fbtime=fbtime;
+	}
 	
 	public String getCourseid() {
 		return courseid;
