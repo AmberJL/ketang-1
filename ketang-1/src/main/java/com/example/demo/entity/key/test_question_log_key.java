@@ -25,7 +25,7 @@ public class test_question_log_key implements Serializable{
 	//题号
 	@Id
 	@Column(name = "ti_hao",insertable=false,updatable=false)
-	private String tihao;
+	private int tihao;
 	
 	//学生手机号
 	@Id
@@ -50,11 +50,11 @@ public class test_question_log_key implements Serializable{
 		this.fbtime = fbtime;
 	}
 
-	public String getTihao() {
+	public int getTihao() {
 		return tihao;
 	}
 
-	public void setTihao(String tihao) {
+	public void setTihao(int tihao) {
 		this.tihao = tihao;
 	}
 

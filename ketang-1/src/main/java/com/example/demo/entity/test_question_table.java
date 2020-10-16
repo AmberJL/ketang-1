@@ -32,7 +32,7 @@ public class test_question_table {
 	//题号
 	@Id
 	@Column(name = "ti_hao")
-	private String tihao;
+	private int tihao;
 	
 	//题目
 	@Column(name = "value")
@@ -64,11 +64,11 @@ public class test_question_table {
 		this.fbtime = fbtime;
 	}
 
-	public String getTihao() {
+	public int getTihao() {
 		return tihao;
 	}
 
-	public void setTihao(String tihao) {
+	public void setTihao(int tihao) {
 		this.tihao = tihao;
 	}
 
