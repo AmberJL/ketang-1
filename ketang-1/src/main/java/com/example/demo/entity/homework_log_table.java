@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.Table;
 
 import com.example.demo.entity.key.homework_log_key;
@@ -11,6 +12,7 @@ import com.example.demo.entity.key.homework_log_key;
 //作业文件提交记录表Entity
 @Entity
 @Table(name = "homework_log_table")
+@IdClass(homework_log_key.class)
 public class homework_log_table {
 	
 	//联合主键
