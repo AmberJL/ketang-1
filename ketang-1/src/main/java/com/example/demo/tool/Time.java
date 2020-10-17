@@ -35,12 +35,12 @@ public class Time {
 	}
 	
 	//字符串转时间
-		public static Date getDate(String value) {
-			try {
-				return s.parse(value);
-			} catch (ParseException e) {
-				e.printStackTrace();
-				return null;
-			}
+	public static Date getDate(String value) {
+		try {
+			return s.parse(value);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
 		}
+	}
 }
