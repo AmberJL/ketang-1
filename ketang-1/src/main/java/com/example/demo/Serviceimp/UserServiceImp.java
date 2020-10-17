@@ -46,9 +46,9 @@ public class UserServiceImp implements UserService {
 		String phone = AES.decode(t);
 		System.out.println("phone:"+phone+" identity:"+user.getIdentity()+"final: "+ pwd);
 		user_table u = new user_table();
-		u.setUser_phone(phone);
+		u.setUserphone(phone);
 		u.setIdentity(user.getIdentity());
-		u.setUser_pwd(pwd);
+		u.setUserpwd(pwd);
 		try {
 			try{
 				user_table chong = this.userRespository.findById(phone).get();

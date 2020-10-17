@@ -9,14 +9,15 @@ import javax.persistence.*;
 @Data
 public class student_table {
     @Id
+    @Column(name = "phone")
     private String phone;
-    @Column(nullable = false)
-    private String stu_name;
-    @Column(length = 1,nullable = false)
+    @Column(nullable = false,name = "stu_name")
+    private String stuname;
+    @Column(length = 1,nullable = false,name = "sex")
     private String sex;
-    @Column(length = 4,nullable = false)
+    @Column(length = 4,nullable = false,name = "year")
     private String year;
-    @Column(nullable = false)
-    private int school_id;
+    @Column(nullable = false,name = "school_id")
+    private int schoolid;
 
 }

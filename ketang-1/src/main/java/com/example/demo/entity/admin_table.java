@@ -12,12 +12,13 @@ import javax.persistence.Table;
 
 public class admin_table {
     @Id
-    private int admin_id;
-    @Column(nullable = false)
-    private String admin_name;
-    @Column(nullable = false)
-    private String admin_phone;
-    @Column(nullable = false)
-    private String admin_pwd;
+    @Column(name = "admin_id")
+    private int adminid;
+    @Column(nullable = false,name = "admin_name")
+    private String adminname;
+    @Column(nullable = false,name = "admin_phone")
+    private String adminphone;
+    @Column(nullable = false,name = "admin_pwd")
+    private String adminpwd;
 
 }

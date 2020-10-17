@@ -11,8 +11,8 @@ import java.io.Serializable;
 public class course_log_primaryKey implements Serializable {
     @Id
     @Column(name="course_id",insertable = false,updatable = false)
-    private String course_id;
+    private String courseid;
     @Id
     @Column(name="student_phone",insertable = false,updatable = false)
-    private String student_phone;
+    private String studentphone;
 }

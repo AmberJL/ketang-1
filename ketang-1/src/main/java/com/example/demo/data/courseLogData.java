@@ -10,5 +10,5 @@ import lombok.NoArgsConstructor;
 public class courseLogData {
 
     private String course_id;
-    private String stu_id;
+    private String stu_phone;
 }

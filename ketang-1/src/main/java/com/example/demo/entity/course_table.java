@@ -4,17 +4,22 @@ import lombok.Data;
 
 import javax.persistence.*;
 
+
+
 @Entity
 @Table(name="course_table")
 @Data
 public class course_table {
     @Id
-    private String course_id;
-    @Column(nullable = false)
-    private String course_name;
-    @Column(nullable = false)
-    private String teacher_phone;
-    @Column
-    private String course_introduce;
+    @Column(name = "course_id")
+    private String courseid;
+    @Column(nullable = false,name = "course_name")
+    private String coursename;
+    @Column(nullable = false,name = "teacher_phone")
+    private String teacherphone;
+    @Column(nullable = false,name="time")
+    private String time;
+    @Column(name = "course_introduce")
+    private String courseintroduce;
 
 }

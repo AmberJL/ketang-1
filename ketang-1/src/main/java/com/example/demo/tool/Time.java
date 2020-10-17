@@ -8,6 +8,7 @@ public class Time {
 	
 	//日期格式
 	private static SimpleDateFormat s= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	private static SimpleDateFormat s1= new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	
 	//取当前时间
 	public static String getTime() {
@@ -24,5 +25,9 @@ public class Time {
 	public static String getTimeBefor(long time) {
 		Date temp=new Date();
 		return s.format(new Date(temp.getTime() - time));
+	}
+	public static String getDay(){
+		Date temp=new Date();
+		return s1.format(new Date());
 	}
 }

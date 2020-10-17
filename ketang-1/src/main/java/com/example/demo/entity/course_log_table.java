@@ -13,8 +13,8 @@ public class course_log_table {
     private course_log_primaryKey primaryKey;
     @Id
     @Column(name = "course_id")
-    private String course_id;
+    private String courseid;
     @Id
-    @Column
-    private String student_phone;
+    @Column(name = "student_phone")
+    private String studentphone;
 }

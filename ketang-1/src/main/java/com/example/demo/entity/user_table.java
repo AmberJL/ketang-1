@@ -9,9 +9,10 @@ import javax.persistence.*;
 @Data
 public class user_table {
     @Id
-    private String user_phone;
-    @Column(length = 1,nullable = false)
+    @Column(name = "user_phone")
+    private String userphone;
+    @Column(length = 1,nullable = false,name = "identity")
     private String identity;
-    @Column(nullable = false)
-    private String user_pwd;
+    @Column(nullable = false,name = "user_pwd")
+    private String userpwd;
 }

@@ -34,10 +34,10 @@ public class TeacherServiceimp implements TeacherService {
                 System.out.println("身份存在问题！");
             }
             else {
-                teacherTable.setTeacher_name(name);
+                teacherTable.setTeachername(name);
                 teacherTable.setSex(sex);
                 teacherTable.setDepartment(department);
-                teacherTable.setSchool_id(school_id);
+                teacherTable.setSchoolid(school_id);
                 teacherTable.setPhone(phone);
                 teacherRespository.save(teacherTable);
                 System.out.println("插入教师表成功！");
