@@ -1,5 +1,6 @@
 package com.example.demo.tool;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -26,8 +27,20 @@ public class Time {
 		Date temp=new Date();
 		return s.format(new Date(temp.getTime() - time));
 	}
+	
+	
 	public static String getDay(){
 		Date temp=new Date();
 		return s1.format(new Date());
 	}
+	
+	//字符串转时间
+		public static Date getDate(String value) {
+			try {
+				return s.parse(value);
+			} catch (ParseException e) {
+				e.printStackTrace();
+				return null;
+			}
+		}
 }

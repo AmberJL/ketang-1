@@ -19,4 +19,7 @@ public interface CourseLogRepositpry extends JpaRepository<course_log_table, cou
     @Query(value="select * from course_log_table c where c.course_id=:id1",nativeQuery = true)
     public List<course_log_table> selectCourseLogById(@Param("id1") String course_id);
     public int countByCourseid(String id);
+    
+    
+    public List<course_log_table> findAllByCourseid(String course_id);
 }
