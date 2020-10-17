@@ -27,7 +27,13 @@ public class test_question_key implements Serializable{
 	@Column(name = "ti_hao",insertable=false,updatable=false)
 	private int tihao;
 
+	public test_question_key() {}
 	
+	public test_question_key(String courseid,String fbtime,int tihao) {
+		this.courseid=courseid;
+		this.fbtime=fbtime;
+		this.tihao=tihao;
+	}
 	
 	public String getCourseid() {
 		return courseid;
