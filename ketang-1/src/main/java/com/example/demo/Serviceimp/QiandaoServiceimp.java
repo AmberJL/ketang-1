@@ -14,6 +14,7 @@ import com.example.demo.entity.qiandao_table;
 import com.example.demo.entity.key.course_time_key;
 import com.example.demo.entity.key.course_time_phone_key;
 import com.example.demo.repository.CourseLogRepositpry;
+import com.example.demo.repository.CourseRepository;
 import com.example.demo.repository.QiandaoLogRepository;
 import com.example.demo.repository.QiandaoRespository;
 import com.example.demo.tool.SJM;
@@ -25,11 +26,13 @@ public class QiandaoServiceimp implements QiandaoService {
 	private final QiandaoRespository qdDao;
 	private final QiandaoLogRepository qdLogDao;
 	private final CourseLogRepositpry cLogDao;
+	private final CourseRepository cDao;
 
-	public QiandaoServiceimp(@Autowired QiandaoRespository qdDao,@Autowired QiandaoLogRepository qdLogDao,@Autowired CourseLogRepositpry cLogDao) {
+	public QiandaoServiceimp(@Autowired QiandaoRespository qdDao,@Autowired QiandaoLogRepository qdLogDao,@Autowired CourseLogRepositpry cLogDao,@Autowired CourseRepository cDao) {
 		this.qdDao=qdDao;
 		this.qdLogDao=qdLogDao;
 		this.cLogDao=cLogDao;
+		this.cDao=cDao;
 	}
 
 	//老师获取签到列表
@@ -41,6 +44,13 @@ public class QiandaoServiceimp implements QiandaoService {
 	//老师发布签到
 	@Override
 	public String newQd(String course_id, String name, String way, long jz_long) {
+		
+		try {
+			cDao.findById(course_id).get();
+		}catch(Exception e) {
+			return "课程不存在";
+		}
+		
 		qiandao_table temp=new qiandao_table();
 		temp.setCourseid(course_id);
 		temp.setFbtime(Time.getTime());

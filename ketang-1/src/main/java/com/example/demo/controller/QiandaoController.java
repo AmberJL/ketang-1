@@ -48,10 +48,12 @@ public class QiandaoController {
 		
 		String temp=qiandaoService.newQd(course_id,name,way,jz_long);
 		
+		if(!"课程不存在".equals(temp)) {
 		// TODO
 		/**
 		 * 这里可以广播通知签到
 		 */
+		}
 		
 		return temp;
 	}
