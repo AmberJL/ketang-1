@@ -46,7 +46,14 @@ public class QiandaoController {
 		String way=p.name;
 		long jz_long=p.jz_long;
 		
-		return qiandaoService.newQd(course_id,name,way,jz_long);
+		String temp=qiandaoService.newQd(course_id,name,way,jz_long);
+		
+		// TODO
+		/**
+		 * 这里可以广播通知签到
+		 */
+		
+		return temp;
 	}
 	
 	//老师获取单次签到人数
@@ -72,12 +79,6 @@ public class QiandaoController {
 		/**
 		 * 这里查询学生表添加学生姓名和学号
 		 */
-		
-		
-		
-		
-		
-		
 		
 		return temp;
 	}

@@ -29,7 +29,18 @@ public class NoticeController {
 		String course_id=p.course_id;
 		String value=p.value;
 		
-		return noticeService.add(course_id, value);
+		String temp=noticeService.add(course_id, value);
+		
+		
+		if("发布成功".equals(temp)) {
+			// TODO
+			/**
+			 * 这里可以广播通知公告
+			 */
+		}
+		
+		
+		return temp;
 	}
 	
 	//获取公告列表
