@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.Service.NoticeService;
 import com.example.demo.entity.notice_table;
 import com.example.demo.entity.key.course_time_key;
+import com.example.demo.repository.CourseRepository;
 import com.example.demo.repository.NoticeRespository;
 import com.example.demo.tool.Time;
 
@@ -15,14 +16,24 @@ import com.example.demo.tool.Time;
 public class NoticeServiceimp implements NoticeService {
 	
 	private final NoticeRespository dao;
+	private final CourseRepository courseDao;
 	
-	public NoticeServiceimp(@Autowired NoticeRespository dao) {
+	public NoticeServiceimp(@Autowired NoticeRespository dao,@Autowired CourseRepository courseDao) {
 		this.dao=dao;
+		this.courseDao=courseDao;
 	}
 
 	//老师添加公告
 	@Override
 	public String add(String course_id, String value) {
+		
+		try {
+			courseDao.findById(course_id).get();
+		}catch(Exception e) {
+			return "课程不存在";
+		}
+		
+		
 		notice_table temp=new notice_table();
 		temp.setCourseid(course_id);
 		temp.setFbtime(Time.getTime());

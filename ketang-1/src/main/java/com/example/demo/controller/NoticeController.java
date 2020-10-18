@@ -31,14 +31,12 @@ public class NoticeController {
 		
 		String temp=noticeService.add(course_id, value);
 		
-		
 		if("发布成功".equals(temp)) {
 			// TODO
 			/**
 			 * 这里可以广播通知公告
 			 */
 		}
-		
 		
 		return temp;
 	}
