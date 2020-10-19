@@ -31,7 +31,7 @@ public class MessageServiceimp implements MessageService{
 	@Override
 	public void changeToRead(String to_user_id, String from_user_id, long time) {
 		// TODO Auto-generated method stub
-		
+		this.messageRep.toRead(to_user_id, time, from_user_id);
 	}
 
 	@Override
@@ -43,6 +43,7 @@ public class MessageServiceimp implements MessageService{
 			BeanUtils.copyProperties(entity, d);
 			return d;
 		}).collect(Collectors.toList());
+		System.out.println("查找长度："+data.size());
 		return data;
 	}
 
@@ -57,6 +58,20 @@ public class MessageServiceimp implements MessageService{
 			return d;
 		}).collect(Collectors.toList());
 		return data;
+	}
+
+	@Override
+	public void saveMessage(messageData message) {
+		// TODO Auto-generated method stub
+		System.out.println(message.getContent());
+		message_table ms = new message_table();
+		ms.setContent(message.getContent());
+		ms.setFrom_user_id(message.getFrom_user_id());
+		ms.setTime(message.getTime());
+		ms.setState(message.getState());
+		ms.setTo_user_id(message.getTo_user_id());
+		
+		this.messageRep.save(ms);
 	}
 
 }

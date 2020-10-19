@@ -33,6 +33,16 @@ public class FileServiceTools {
 			return null;
 	}
 	
+	public static void delete(String course_id,String file_id) {
+		
+		File temp=new File(rootPath+"\\"+course_id+"\\"+file_id);
+		
+		if(temp.exists()&&!temp.isDirectory()) {
+			temp.delete();
+		}
+		
+	}
+	
 	private static void checkDir(String course_id) {
 		File file=new File(rootPath+"\\"+course_id);
 		if(file.exists()&&file.isDirectory())return;

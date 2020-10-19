@@ -42,7 +42,7 @@ public class RedisClient{
 	}
 
 	public List<String> blpopHdasAlertList() {
-		System.out.println("yes");
+//		System.out.println("yes");
 		try {
 			ShardedJedis shardedJedis= shardedJedisPool.getResource(); 
 			List<String> ll = shardedJedis.blpop(0,"myList");  //redis的队列名称，这里通过命令取

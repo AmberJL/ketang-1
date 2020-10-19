@@ -1,4 +1,4 @@
-package com.example.demo.c;
+package com.example.demo.controller;
 
 import java.io.IOException;
 import java.util.Date;
@@ -16,17 +16,31 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONObject;
+import com.example.demo.Service.MessageService;
+import com.example.demo.c.RedisClient;
+import com.example.demo.data.messageData;
  
 /**
  * @Description: WebSocket服务端代码，包含接收消息，推送消息等接口
  * userName是接收的参数
  */
+
 @Component
 @ServerEndpoint(value = "/ws/{userName}")
+@RestController
 public class WebSocketServer {
+	
+	private static MessageService message;
+    @Autowired
+    public void setMyServiceImpl(MessageService myService){
+    	WebSocketServer.message = myService;
+    }
+	
 	static ConcurrentHashMap<Session, String> map = new ConcurrentHashMap<Session, String>();     //存储系统的用户信息
 	static ConcurrentHashMap<Session,Long> heart = new ConcurrentHashMap<Session,Long>();
 	RedisClient redis = new RedisClient();
@@ -93,8 +107,31 @@ public class WebSocketServer {
    @OnMessage
    public void OnMessage(String msg, Session session) throws InterruptedException {
        System.out.println("已从客户端接收消息：" + msg);
+       heart.put(session, new Date().getTime());
        if(msg.equals("ping")) {
-    	   heart.put(session, new Date().getTime());
+    	   
+       }else {
+    	   try {
+    		   redis.push("myList", msg);
+    		   //非心跳包
+//    		   JSONObject res = JSONObject.parseObject(msg);
+//        	   messageData ms = new messageData();
+//        	   
+//        	   ms.setContent((String)res.get("content"));
+//        	   ms.setFrom_user_id((String)res.get("from_user_id"));
+//        	   ms.setState(Integer.parseInt((String)res.get("state")));
+//        	   ms.setTime(Long.parseLong((String)res.get("time")));
+//        	   ms.setTo_user_id((String)res.get("to_user_id"));
+//        	   WebSocketServer.this.message.saveMessage(ms);
+    	   }catch(Exception e) {
+    		   System.err.println("存储出错");
+    		   e.printStackTrace();
+    	   }
+    	   
+    	 
+    	   
+    	   
+    	   
        }
 //       this.sendMessage(session, msg);
 //       JSONObject res = JSONObject.parseObject(new String(msg));

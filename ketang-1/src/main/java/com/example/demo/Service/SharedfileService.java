@@ -20,4 +20,7 @@ public interface SharedfileService {
 	
 	//获取文件名
 	public String getName(String course_id,String file_id);
+	
+	//删除文件
+	public String remove(String course_id,String file_id);
 }

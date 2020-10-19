@@ -5,8 +5,10 @@ import com.example.demo.c.AES;
 import com.example.demo.c.MD5;
 import com.example.demo.data.userData;
 import com.example.demo.entity.admin_table;
+import com.example.demo.entity.student_table;
 import com.example.demo.entity.user_table;
 import com.example.demo.repository.AdminRespository;
+import com.example.demo.repository.StudentRespository;
 import com.example.demo.repository.UserRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,6 +23,9 @@ import javax.annotation.Resource;
 public class UserServiceImp implements UserService {
     @Autowired
     private UserRespository userRespository;
+    
+    @Autowired
+    private StudentRespository student;
 
     public void Testlogin(String phone, String pwd) {
 
@@ -82,7 +87,7 @@ public class UserServiceImp implements UserService {
 		if(res.size() == 1)
 		{
 			user_table u = res.get(0);
-			return u.getIdentity().equals("S") ? 400 : 500;			
+			return u.getIdentity().equals("S") ? 400 : 500;	
 			
 		}else {
 			return 401;
@@ -98,10 +103,11 @@ public class UserServiceImp implements UserService {
 			t.put("key", user.getKey());
 			t.put("value", user.getUser_phone());
 			String phone = AES.decode(t);
-			System.out.println("phone:"+phone+"final: "+ pwd);
+			System.out.println("修改密码phone:"+phone+"final: "+ pwd);
 			this.userRespository.forget_pwd(pwd, phone);
-			return 200;
+			return 201;
 		}catch(Exception e) {
+			
 			e.printStackTrace();
 			return 400;
 		}

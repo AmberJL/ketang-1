@@ -13,6 +13,8 @@ import javax.crypto.spec.SecretKeySpec;
 
 import org.springframework.util.Base64Utils;
 
+import com.alibaba.fastjson.util.Base64;
+
 //import org.bouncycastle.util.encoders.Base64;
 
 
@@ -21,9 +23,10 @@ public class AES {
 
 
 	public static void main(String[] args) {
-		HashMap<String,String> code = AES.encode("和三假按揭啊妇女节阿飞飞你家的烦恼都看了你咖啡店你看反馈13716521296");
-		System.out.println("key:"+code.get("key")+" value:"+code.get("value"));
-		System.out.println(decode(code));
+		String t = "\"";
+		String s = Base64Utils.encodeToString(t.getBytes());
+		System.out.println("s:"+s);
+		System.out.println(new String(Base64Utils.decodeFromString(s)));
 	}
 	//加密
 	public static HashMap<String,String>  encode (String string){
@@ -55,6 +58,7 @@ public class AES {
       }
       
   }
+	//解码过程
 	public static String decode(HashMap<String,String> res)
 	{
 		try {
@@ -82,7 +86,7 @@ public class AES {
 			array[j] = t;
 		}
 		temp = new String(array);
-		System.out.println("mmi:"+temp);
+//		System.out.println("mmi:"+temp);
 		return temp;
 	}
 	//假key 变 真key
@@ -96,7 +100,7 @@ public class AES {
 			array[j] = t;
 		}
 		f = new String(array);
-		System.out.println("after_change:"+f);
+//		System.out.println("after_change:"+f);
 		return new SecretKeySpec(Base64Utils.decodeFromString(f),"AES");
 		
 	}

@@ -93,6 +93,17 @@ public class SharedfileController {
         } catch (IOException e) {}
 	}
 	
+	//删除文件
+	@RequestMapping("/remove")
+	public String remove(@RequestBody pack.Para p) {
+		
+		String course_id=p.course_id;
+		String file_id=p.file_id;
+		
+		return sharedfileService.remove(course_id,file_id);
+	}
+	
+	
 	
 	
 	//包装参数和返回值
@@ -116,6 +127,7 @@ public class SharedfileController {
 		}
 		public static class Para{
 			public String course_id;
+			public String file_id;
 		}
 	}
 }

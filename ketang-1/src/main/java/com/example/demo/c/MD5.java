@@ -45,11 +45,8 @@ public class MD5 {
 	 {
 		 	pwd = MD5.md5(pwd);
 			String salt = pwd.substring(5);
-			System.out.println("slat:"+salt);
 			pwd += salt;
-			System.out.println("pwd+slat:"+pwd);
 			pwd = MD5.md5(pwd);
-			System.out.println("finall:"+pwd);
 			return pwd;
 	 }
 }

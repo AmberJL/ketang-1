@@ -19,16 +19,18 @@ public interface MessageRepository extends JpaRepository<message_table,Long> {
 	public List<message_table> unReadMessage(@Param("id1") String id,@Param("id2")int state);
 	
 	//查询历史消息
-	@Query(value="select * from message_table t where t.to_user_id =:id1 and t.time < :id2", nativeQuery=true)
+	@Query(value="select * from message_table t where (t.to_user_id =:id1 or t.from_user_id = :id1 ) and t.time > :id2 order by t.time  ASC", nativeQuery=true)
 	public List<message_table> historyMessage(@Param("id1") String id,@Param("id2")long time);
 	
 	//查询全部历史消息
-	@Query(value="select * from message_table t where t.to_user_id =:id1", nativeQuery=true)
+	@Query(value="select * from message_table t where t.to_user_id =:id1 or t.from_user_id = :id1 order by t.time ASC", nativeQuery=true)
 	public List<message_table> allHistoryMessage(@Param("id1") String id);
 	
-	//未读变已读
-//	@Transactional
-//	@Modifying
-//	@Query(value="update message_table t set t.state = 1 where t.to_user_id =:id1 and t.time < id2 and t.from_user_id =:id3",nativeQuery=true)
-//	public void forget_pwd(@Param("id1") String to,@Param("id2") long time,@Param("id3") String from);
+	
+	
+	//变更读取状态存数据库
+	@Transactional
+	@Modifying
+	@Query(value="update message_table t set t.state = 1 where t.to_user_id =:id1 and t.time <= :id2 and t.from_user_id =:id3",nativeQuery=true)
+	public void toRead(@Param("id1") String to,@Param("id2") long time,@Param("id3") String from);
 }
