@@ -1,5 +1,6 @@
 package com.example.demo.repository;
 
+import com.example.demo.data.userData;
 import com.example.demo.entity.user_table;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

@@ -1,7 +1,9 @@
 package com.example.demo.Serviceimp;
 
 import com.example.demo.Service.TeacherService;
+import com.example.demo.data.schoolData;
 import com.example.demo.data.teacherData;
+import com.example.demo.data.userData;
 import com.example.demo.entity.school_table;
 import com.example.demo.entity.teacher_table;
 import com.example.demo.entity.user_table;

@@ -25,7 +25,7 @@ public interface CourseRepository extends JpaRepository<course_table,String> {
     //通过教师手机号查询申报的课程信息并以时间为准进行降序查询
     public List<course_table> findAllByTeacherphoneOrderByTimeDesc(String phone);
     //通过课程号查询申报的课程信息并以时间为准进行降序查询
-    public List<course_table> findAllByCourseidOrderByTimeDesc(String course_id);
+    //public List<courseData> findByCourseidOrderByTimeDesc(String course_id);
 
     public course_table findByCourseid(String id);
     //更新课程名称与介绍

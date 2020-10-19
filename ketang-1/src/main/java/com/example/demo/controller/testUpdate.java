@@ -34,6 +34,7 @@ public class testUpdate {
         teacherService.insertTeacher(2,"zzh","G","软件工程",2,"123");
         teacherService.insertTeacher(3,"zzh","G","软件工程",1,"123");
         studentService.insertStudent(123,"zzh","B","2017",1,"12");*/
+       // teacherService.insertTeacher();
         return "查询成功";
     }
 }

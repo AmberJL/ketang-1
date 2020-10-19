@@ -28,7 +28,7 @@ public class CourseServiceimp implements CourseService {
     course_log_primaryKey primaryKey;
     CourseWithNumTea courseWithNumTea;
     CourseWithNumStu courseWithNumStu;
-    course_log_table log;
+    List<course_log_table> log;
    // List list;
 
     //教师添加课程相关信息
@@ -100,38 +100,41 @@ public class CourseServiceimp implements CourseService {
         return courseWithNumTea;
     }
 
-    //学生通过课程号查询课程信息
-    @Override
-    public List<CourseWithNumStu> searchCourseById(String course_id,String phone) {
-        List<course_table> coursetable=courseRepository.findAllByCourseidOrderByTimeDesc(course_id);
-        List<CourseWithNumStu> courseWithNumStu =new ArrayList();
-        for(int i=0;i<coursetable.size();i++){
-            CourseWithNumStu courseWithNumStu1 = new CourseWithNumStu();
-            course_table coursetable1 = coursetable.get(i);
-            courseWithNumStu1.setCourse_id(coursetable1.getCourseid());
-            courseWithNumStu1.setCourse_name(coursetable1.getCoursename());
-            courseWithNumStu1.setCourse_introduce(coursetable1.getCourseintroduce());
-            courseWithNumStu1.setNum(courseLogRepositpry.countByCourseid(coursetable1.getCourseid()));
-            courseWithNumStu1.setTime(coursetable1.getTime().substring(0,10));
-            courseWithNumStu1.setStudent_phone(phone);
-            courseWithNumStu.add(courseWithNumStu1);
-        }
-        System.out.println(courseWithNumStu);
-        return courseWithNumStu;
-    }
+
     //学生通过学生手机号查询课程信息
     public List<CourseWithNumStu> searchCourseByStuPhone(String stu_phone){
-     String course_id;
+     List<String> course_id=new ArrayList<String>();
+     List<course_table> courseDataList = new ArrayList<course_table>();
+     List<CourseWithNumStu> list = new ArrayList<CourseWithNumStu>();
         try{
              log = courseLogRepositpry.findByStudentphone(stu_phone);
              System.out.println("输出查询的手机号"+stu_phone);
-             course_id = log.getCourseid();
+             for(int i=0;i<log.size();i++){
+                 course_id.add(log.get(i).getCourseid());
+             }
             System.out.println("输出查询的课程号"+course_id);
+             for(int i=0;i<course_id.size();i++){
+                 courseDataList.add(courseRepository.findByCourseid(course_id.get(i)));
+             }
+             System.out.println("输出课程信息："+courseDataList);
+            for(int i=0;i<courseDataList.size();i++){
+                CourseWithNumStu courseWithNumStu = new CourseWithNumStu();
+                course_table courseData1 = courseDataList.get(i);
+                courseWithNumStu.setCourse_id(courseData1.getCourseid());
+                courseWithNumStu.setCourse_name(courseData1.getCoursename());
+                courseWithNumStu.setCourse_introduce(courseData1.getCourseintroduce());
+                courseWithNumStu.setNum(courseLogRepositpry.countByCourseid(courseData1.getCourseid()));
+                courseWithNumStu.setTime(courseData1.getTime().substring(0,10));
+                courseWithNumStu.setStudent_phone(stu_phone);
+                list.add(courseWithNumStu);
+            }
+            System.out.println(list);
+
         }catch (Exception e){
-            //e.printStackTrace();
+            e.printStackTrace();
             return new ArrayList();
         }
-        return searchCourseById(log.getCourseid(),stu_phone);
+        return list;
     }
     //通过课程号返回课程信息
     @Override

@@ -11,8 +11,8 @@ public interface CourseService {
     int deleteCourse(courseData course);
     //通过教师手机号查询课程
     List<CourseWithNumTea> searchCourseWithNumByPhone(String phone);
-    //通过学生手机号查询课程
-    List<CourseWithNumStu> searchCourseById(String course_id,String phone);
+ /*   //通过学生手机号查询课程
+    List<CourseWithNumStu> searchCourseById(String course_id,String phone);*/
     //通过学生手机号查询选修的课程
     List<CourseWithNumStu> searchCourseByStuPhone(String stu_phone);
     //通过课程号查询课程信息

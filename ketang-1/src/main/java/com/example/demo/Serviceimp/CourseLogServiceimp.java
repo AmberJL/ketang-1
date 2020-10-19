@@ -10,6 +10,8 @@ import com.example.demo.repository.CourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CourseLogServiceimp implements CourseLogService {
     @Autowired
@@ -20,6 +22,7 @@ public class CourseLogServiceimp implements CourseLogService {
     CourseService courseService;
 
     course_log_table courseLog;
+    List<course_log_table> courseLogList;
     //学生选修课程，正常插入课程返回1，否则返回0
     @Override
     public int insertCourseLog(courseLogData log) {
@@ -42,10 +45,10 @@ public class CourseLogServiceimp implements CourseLogService {
     }
     //通过学生手机号查询课程id
     @Override
-    public String searchCourseByStuId(courseLogData logData) {
+    public List<course_log_table> searchCourseByStuId(courseLogData logData) {
         String phone = logData.getStu_phone();
-        courseLog = courseLogRepositpry.findByStudentphone(phone);
-        return courseLog.getCourseid();
+        courseLogList = courseLogRepositpry.findByStudentphone(phone);
+        return courseLogList;
     }
     //学生删除选课
     @Override
