@@ -66,4 +66,15 @@ public class SharedfileServiceimp implements SharedfileService{
 		}
 	}
 
+	//删除文件
+	@Override
+	public String remove(String course_id, String file_id) {
+		dao.deleteById(new sharedfile_key(course_id,file_id));
+		
+		//删除文件
+		//FileServiceTools.delete(course_id,file_id);
+		
+		return "删除文件";
+	}
+
 }
