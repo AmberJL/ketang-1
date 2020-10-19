@@ -87,15 +87,7 @@ public class UserServiceImp implements UserService {
 		if(res.size() == 1)
 		{
 			user_table u = res.get(0);
-			List<student_table> s = student.checkInfo(phone);
-			if(s.size() == 1)
-			{
-				//学生400 老师500
-				return u.getIdentity().equals("S") ? 400 : 500;	
-			}else {
-				//未完善信息 402
-				return 402;
-			}
+			return u.getIdentity().equals("S") ? 400 : 500;	
 			
 		}else {
 			return 401;
