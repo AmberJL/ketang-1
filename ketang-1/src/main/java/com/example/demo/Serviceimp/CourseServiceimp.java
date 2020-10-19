@@ -1,18 +1,19 @@
 package com.example.demo.Serviceimp;
 
 import com.example.demo.Service.CourseService;
-import com.example.demo.data.courseData;
-import com.example.demo.entity.CoursePackage.CourseWithNum;
+import com.example.demo.data.*;
 import com.example.demo.entity.course_log_primaryKey;
+import com.example.demo.entity.course_log_table;
 import com.example.demo.entity.course_table;
+import com.example.demo.entity.teacher_table;
 import com.example.demo.repository.CourseLogRepositpry;
 import com.example.demo.repository.CourseRepository;
+import com.example.demo.repository.TeacherRespository;
 import com.example.demo.tool.SJM;
 import com.example.demo.tool.Time;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,15 +23,20 @@ public class CourseServiceimp implements CourseService {
     CourseRepository courseRepository;
     @Autowired
     CourseLogRepositpry courseLogRepositpry;
+    @Autowired
+    TeacherRespository teacherRespository;
     course_log_primaryKey primaryKey;
-    CourseWithNum courseWithNum;
+    CourseWithNumTea courseWithNumTea;
+    CourseWithNumStu courseWithNumStu;
+    course_log_table log;
    // List list;
+
     //教师添加课程相关信息
     @Override
     public int insertCourse(courseData coursedata) {
         course_table course = new course_table();
         String courseId = SJM.getNumLet(6);
-    //数据库出现异常则返回0
+            //数据库出现异常则返回0
         try {
             //判断课程号码是否重复,如果重复则直到获取不重复为止
             while (courseRepository.selectCourseById(courseId).size() != 0) {
@@ -57,37 +63,108 @@ public class CourseServiceimp implements CourseService {
         //教师删除课程，成功则返回1，存在异常则返回0
         try {
             String course_id = course.getCourse_id();
+            System.out.println("待删除的课程id"+course_id);
            // String teacher_phone = course.getTeacher_phone();
             if (courseLogRepositpry.selectCourseLogById(course_id) != null) {
                 courseLogRepositpry.deleteCourseInLog(course_id);
                 courseRepository.deleteCourse(course_id);
                 return 1;
-            } else
+            } else{
                 courseRepository.deleteCourse(course_id);
-            return 1;
+                return 1;
+            }
         }catch (Exception e) {
             return 0;
         }
     }
 
 
-    public List<CourseWithNum> searchCourseWithNumByPhone(String phone) {
+    //教师通过手机号查看自己申报的课程
+    public List<CourseWithNumTea> searchCourseWithNumByPhone(String phone) {
         System.out.println(phone);
         List<course_table> coursetable=courseRepository.findAllByTeacherphoneOrderByTimeDesc(phone);
         System.out.println(coursetable);
-        List<CourseWithNum> courseWithNum=new ArrayList();
+        List<CourseWithNumTea> courseWithNumTea =new ArrayList();
         for(int i=0;i<coursetable.size();i++) {
-            CourseWithNum courseWithNum1 = new CourseWithNum();
+            CourseWithNumTea courseWithNumTea1 = new CourseWithNumTea();
             course_table coursetable1 = coursetable.get(i);
-            courseWithNum1.setCourse_id(coursetable1.getCourseid());
-            courseWithNum1.setCourse_name(coursetable1.getCoursename());
-            courseWithNum1.setCourse_introduce(coursetable1.getCourseintroduce());
-            courseWithNum1.setTeacher_phone(coursetable1.getTeacherphone());
-            courseWithNum1.setNum(courseLogRepositpry.countByCourseid(coursetable1.getCourseid()));
-            courseWithNum1.setTime(coursetable1.getTime().substring(0,10));
-            courseWithNum.add(courseWithNum1);
+            courseWithNumTea1.setCourse_id(coursetable1.getCourseid());
+            courseWithNumTea1.setCourse_name(coursetable1.getCoursename());
+            courseWithNumTea1.setCourse_introduce(coursetable1.getCourseintroduce());
+            courseWithNumTea1.setTeacher_phone(coursetable1.getTeacherphone());
+            courseWithNumTea1.setNum(courseLogRepositpry.countByCourseid(coursetable1.getCourseid()));
+            courseWithNumTea1.setTime(coursetable1.getTime().substring(0,10));
+            courseWithNumTea.add(courseWithNumTea1);
         }
-        System.out.println(courseWithNum);
-        return courseWithNum;
+        System.out.println(courseWithNumTea);
+        return courseWithNumTea;
+    }
+
+    //学生通过课程号查询课程信息
+    @Override
+    public List<CourseWithNumStu> searchCourseById(String course_id,String phone) {
+        List<course_table> coursetable=courseRepository.findAllByCourseidOrderByTimeDesc(course_id);
+        List<CourseWithNumStu> courseWithNumStu =new ArrayList();
+        for(int i=0;i<coursetable.size();i++){
+            CourseWithNumStu courseWithNumStu1 = new CourseWithNumStu();
+            course_table coursetable1 = coursetable.get(i);
+            courseWithNumStu1.setCourse_id(coursetable1.getCourseid());
+            courseWithNumStu1.setCourse_name(coursetable1.getCoursename());
+            courseWithNumStu1.setCourse_introduce(coursetable1.getCourseintroduce());
+            courseWithNumStu1.setNum(courseLogRepositpry.countByCourseid(coursetable1.getCourseid()));
+            courseWithNumStu1.setTime(coursetable1.getTime().substring(0,10));
+            courseWithNumStu1.setStudent_phone(phone);
+            courseWithNumStu.add(courseWithNumStu1);
+        }
+        System.out.println(courseWithNumStu);
+        return courseWithNumStu;
+    }
+    //学生通过学生手机号查询课程信息
+    public List<CourseWithNumStu> searchCourseByStuPhone(String stu_phone){
+     String course_id;
+        try{
+             log = courseLogRepositpry.findByStudentphone(stu_phone);
+             System.out.println("输出查询的手机号"+stu_phone);
+             course_id = log.getCourseid();
+            System.out.println("输出查询的课程号"+course_id);
+        }catch (Exception e){
+            //e.printStackTrace();
+            return new ArrayList();
+        }
+        return searchCourseById(log.getCourseid(),stu_phone);
+    }
+    //通过课程号返回课程信息
+    @Override
+    public CourseMessage findCourseMessageByCourseId(courseData data) {
+        teacher_table teacherTable ;
+        course_table courseTable ;
+        String tea_phone;
+        try{
+            courseTable = courseRepository.findByCourseid(data.getCourse_id());
+            tea_phone = courseTable.getTeacherphone();
+            teacherTable = teacherRespository.findByPhone(tea_phone);
+            CourseMessage courseMessage = new CourseMessage();
+            courseMessage.setCourse_introduce(courseTable.getCourseintroduce());
+            courseMessage.setTeacher_name(teacherTable.getTeachername());
+            System.out.println(courseMessage);
+            return courseMessage;
+        }catch (Exception e){
+            return null;
+        }
+    }
+    //更新课程，成功返回1，失败返回0
+    @Override
+    public int UpdateCourse(courseData data) {
+    System.out.println(data);
+        try{
+            String course_name = data.getCourse_name();
+            String course_introduce = data.getCourse_introduce();
+            String course_id = data.getCourse_id();
+            courseRepository.updateCourse(course_name,course_introduce,course_id);
+            return 1;
+        }catch (Exception e){
+            e.printStackTrace();
+            return 0;
+        }
     }
 }

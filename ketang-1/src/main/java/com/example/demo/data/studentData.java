@@ -12,4 +12,5 @@ public class  studentData {
     private String year;
     private int school_id;
     private String stu_phone;
+    private String stu_id;
 }

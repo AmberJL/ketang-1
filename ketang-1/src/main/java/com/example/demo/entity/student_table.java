@@ -19,5 +19,7 @@ public class student_table {
     private String year;
     @Column(nullable = false,name = "school_id")
     private int schoolid;
+    @Column(name = "stu_id")
+    private String stuid;
 
 }

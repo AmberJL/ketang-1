@@ -18,10 +18,12 @@ public class teacher_table {
     @Column(nullable = false,name = "sex")
     private String sex;
 
-    @Column(nullable = false,name = "department")
+    @Column(name = "department")
     private String department;
     @Column(nullable = false,name = "school_id")
     private int schoolid;
+    @Column(name = "teacher_id")
+    private String teacherid;
 
 
 }
