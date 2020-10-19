@@ -1,6 +1,7 @@
 package com.example.demo.Serviceimp;
 
 import com.example.demo.Service.TeacherService;
+import com.example.demo.data.teacherData;
 import com.example.demo.entity.school_table;
 import com.example.demo.entity.teacher_table;
 import com.example.demo.entity.user_table;
@@ -23,29 +24,44 @@ public class TeacherServiceimp implements TeacherService {
 
     @Override
 
-    public void insertTeacher(int id, String name, String sex, String department, int school_id, String phone) {
+    public int insertTeacher(teacherData teaData) {
+        user_table userTable;
+        school_table schoolTable;
+        String phone = teaData.getTeacher_phone();
+        int school_id = teaData.getSchool_id();
+        String name = teaData.getTeacher_name();
+        String sex = teaData.getSex();
+        String department = teaData.getDepartment();
+        String tea_id = teaData.getTeacher_id();
         teacher_table teacherTable = new teacher_table();
 
         try{
-            user_table userTable = userRespository.findById(phone).get();
-            school_table schoolTable = schoolRespository.findById(school_id).get();
-            if(userTable
-                    .getIdentity().equals("S")){
-                System.out.println("身份存在问题！");
+            userTable = userRespository.findByUserphone(phone);
+        }catch (Exception e){
+            System.out.println("没有该用户！");
+            return 100;
+        }
+        try{
+            schoolTable = schoolRespository.findBySchoolid(school_id);
+        }catch (Exception e){
+            System.out.println("没有该学校！");
+            return 101;
+        }
+
+        if(userTable.getIdentity().equals("S")){
+            System.out.println("身份存在问题！");
+            return 110;
             }
             else {
-                teacherTable.setTeacher_id(id);
-                teacherTable.setTeacher_name(name);
+                teacherTable.setTeachername(name);
                 teacherTable.setSex(sex);
                 teacherTable.setDepartment(department);
-                teacherTable.setSchoolTable(schoolTable);
-                teacherTable.setUserTable(userTable);
+                teacherTable.setSchoolid(schoolTable.getSchoolid());
+                teacherTable.setPhone(userTable.getUserphone());
+                teacherTable.setTeacherid(tea_id);
                 teacherRespository.save(teacherTable);
                 System.out.println("插入教师表成功！");
+                return 111;
             }
-
-        }catch (NoSuchElementException Exception){
-            System.out.println("没有该用户！");
-        }
     }
 }

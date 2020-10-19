@@ -9,25 +9,21 @@ import javax.persistence.*;
 @Data
 public class teacher_table {
     @Id
-    private int teacher_id;
+    @Column(name = "phone")
+    private String phone;
 
-    @Column(nullable = false)
-    private String teacher_name;
+    @Column(nullable = false,name = "teacher_name")
+    private String teachername;
 
-    @Column(nullable = false)
+    @Column(nullable = false,name = "sex")
     private String sex;
 
-    @Column(nullable = false)
+    @Column(name = "department")
     private String department;
+    @Column(nullable = false,name = "school_id")
+    private int schoolid;
+    @Column(name = "teacher_id")
+    private String teacherid;
 
-
-    @ManyToOne(cascade = CascadeType.ALL)//多对一的外键
-    @JoinColumn(name = "school_id",referencedColumnName = "school_id")
-    private school_table schoolTable;
-
-
-    @OneToOne(cascade = CascadeType.ALL)//一对一的外键
-    @JoinColumn(name = "teacher_phone",referencedColumnName = "user_phone")
-    private user_table userTable;
 
 }

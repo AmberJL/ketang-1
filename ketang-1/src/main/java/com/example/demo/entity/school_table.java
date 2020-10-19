@@ -10,7 +10,8 @@ import javax.persistence.*;
 public class school_table {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Id
-    private int school_id;
+    @Column(name="school_id")
+    private int schoolid;
     @Column(nullable = false)
-    private String school_name;
+    private String schoolname;
 }

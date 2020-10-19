@@ -21,4 +21,5 @@ public interface UserRespository extends JpaRepository<user_table,String>{
 	@Modifying
 	@Query(value="update user_table t set t.user_pwd =:id1 where t.user_phone =:id2",nativeQuery=true)
 	public void forget_pwd(@Param("id1") String pwd,@Param("id2") String phone);
+	public user_table findByUserphone(String phone);
 }

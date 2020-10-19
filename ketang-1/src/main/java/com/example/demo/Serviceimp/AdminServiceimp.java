@@ -13,10 +13,10 @@ public class AdminServiceimp implements AdminService {
     @Override
     public void InsertAdmin(int id, String name, String pwd, String phone) {
         admin_table adminTable = new admin_table();
-        adminTable.setAdmin_id(id);
-        adminTable.setAdmin_name(name);
-        adminTable.setAdmin_phone(phone);
-        adminTable.setAdmin_pwd(pwd);
+        adminTable.setAdminid(id);
+        adminTable.setAdminname(name);
+        adminTable.setAdminphone(phone);
+        adminTable.setAdminpwd(pwd);
         System.out.println("添加成功");
         adminRespository.save(adminTable);
     }
