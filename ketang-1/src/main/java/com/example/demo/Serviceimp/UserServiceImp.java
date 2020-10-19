@@ -5,8 +5,10 @@ import com.example.demo.c.AES;
 import com.example.demo.c.MD5;
 import com.example.demo.data.userData;
 import com.example.demo.entity.admin_table;
+import com.example.demo.entity.student_table;
 import com.example.demo.entity.user_table;
 import com.example.demo.repository.AdminRespository;
+import com.example.demo.repository.StudentRespository;
 import com.example.demo.repository.UserRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,6 +23,9 @@ import javax.annotation.Resource;
 public class UserServiceImp implements UserService {
     @Autowired
     private UserRespository userRespository;
+    
+    @Autowired
+    private StudentRespository student;
 
     public void Testlogin(String phone, String pwd) {
 
@@ -82,7 +87,15 @@ public class UserServiceImp implements UserService {
 		if(res.size() == 1)
 		{
 			user_table u = res.get(0);
-			return u.getIdentity().equals("S") ? 400 : 500;			
+			List<student_table> s = student.checkInfo(phone);
+			if(s.size() == 1)
+			{
+				//学生400 老师500
+				return u.getIdentity().equals("S") ? 400 : 500;	
+			}else {
+				//未完善信息 402
+				return 402;
+			}
 			
 		}else {
 			return 401;

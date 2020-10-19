@@ -107,8 +107,9 @@ public class WebSocketServer {
    @OnMessage
    public void OnMessage(String msg, Session session) throws InterruptedException {
        System.out.println("已从客户端接收消息：" + msg);
+       heart.put(session, new Date().getTime());
        if(msg.equals("ping")) {
-    	   heart.put(session, new Date().getTime());
+    	   
        }else {
     	   try {
     		   redis.push("myList", msg);

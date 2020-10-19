@@ -31,7 +31,7 @@ public class MessageServiceimp implements MessageService{
 	@Override
 	public void changeToRead(String to_user_id, String from_user_id, long time) {
 		// TODO Auto-generated method stub
-		
+		this.messageRep.toRead(to_user_id, time, from_user_id);
 	}
 
 	@Override
@@ -43,6 +43,7 @@ public class MessageServiceimp implements MessageService{
 			BeanUtils.copyProperties(entity, d);
 			return d;
 		}).collect(Collectors.toList());
+		System.out.println("查找长度："+data.size());
 		return data;
 	}
 

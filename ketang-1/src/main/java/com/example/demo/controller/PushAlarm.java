@@ -16,6 +16,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.example.demo.Service.MessageService;
 import com.example.demo.Service.UserService;
+import com.example.demo.c.Match;
 import com.example.demo.c.RedisClient;
 import com.example.demo.data.messageData;
 
@@ -45,6 +46,7 @@ public class PushAlarm implements ApplicationRunner {             //服务启动
 					// TODO Auto-generated method stub
 					//之前注释的
 					while(true) {
+						WebSocketServer webSocketServer = new WebSocketServer();
 						RedisClient redisClient = new RedisClient();
 						List<String> dataList = redisClient.blpopHdasAlertList();
 						System.out.println(" size:"+dataList.size());
@@ -52,14 +54,43 @@ public class PushAlarm implements ApplicationRunner {             //服务启动
 							String message = dataList.get(1);
 							System.out.println("消息队列："+message);
 							JSONObject res = JSONObject.parseObject(message);
+							System.out.println("1");
 			        	   messageData ms = new messageData();
-			        	   
+			        	   System.out.println("2");
 			        	   ms.setContent((String)res.get("content"));
 			        	   ms.setFrom_user_id((String)res.get("from_user_id"));
 			        	   ms.setState(0);
 			        	   ms.setTime(Long.parseLong((String)res.get("time")));
 			        	   ms.setTo_user_id((String)res.get("to_user_id"));
+			        	   System.out.println("3");
 			        	   PushAlarm.this.message.saveMessage(ms);
+			        	   try {
+			        		   System.out.println("4");
+			        		   Iterator<Entry<Session,String>> iterator = WebSocketServer.map.entrySet().iterator();
+				        	   System.out.println("iterator有next:"+iterator.hasNext());
+			        		   while(iterator.hasNext())
+				        	   {
+				        		   System.out.println("进入了循环");
+				        		   Entry<Session,String> entry = iterator.next();
+				        		   System.out.println("当前检查的是"+entry.getValue());
+				        		   //私聊
+				        		   if(Match.match_mobile(ms.getTo_user_id())) {
+				        			   //如果是要发送的这个人
+				        			   if(entry.getValue().equals(ms.getTo_user_id()))
+				        			   {
+				        				   webSocketServer.sendMessage(entry.getKey(),message);
+				        				   System.out.println("找到了");
+				        				   break;
+				        			   }
+				        			   System.out.println("没有找到");
+				        		   }
+				        	   }
+			        	   }catch(Exception e)
+			        	   {
+			        		   System.out.println("发送消息出错");
+			        		   e.printStackTrace();
+			        	   }
+			        	  
 					}
 					
 //						Iterator<Entry<Session,String>> iterator = WebSocketServer.map.entrySet().iterator();
@@ -90,7 +121,7 @@ public class PushAlarm implements ApplicationRunner {             //服务启动
 	 	}
 	    public static void myTimer(){
 	    	
-	    	//阻塞队列
+	    	
 	    	Runnable run = new Runnable() {
 				
 				@Override
@@ -117,52 +148,6 @@ public class PushAlarm implements ApplicationRunner {             //服务启动
 							System.out.println("心跳监测IOE");
 							e.printStackTrace();
 						}
-						
-						//之前注释的
-//						RedisClient redisClient = new RedisClient();
-//						List<String> dataList = redisClient.blpopHdasAlertList();
-//						System.out.println(" size:"+dataList.size());
-//						if(dataList!=null && dataList.size()>0){
-//							String message = dataList.get(1);
-//							JSONObject ms = JSONObject.parseObject(message);
-//							int type = ms.getIntValue("msgType");
-//							System.out.println("type:"+type);						
-//							Iterator<Entry<Session,String>> iterator = WebSocketServer.map.entrySet().iterator();
-//							Iterator<String> set = WebSocketServer.map.values().iterator();
-//							while (set.hasNext()) {
-//								System.out.println("登录的账户："+set.next());
-//							}
-//							WebSocketServer webSocketServer = new WebSocketServer();
-//							SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//							System.out.println("推送时间："+format.format(new Date()));
-//							if(type == 2)
-//							{
-//								while (iterator.hasNext()) {
-//									Entry<Session,String> entry = iterator.next();
-//									Session session = entry.getKey();
-//									String userPower = entry.getValue();
-//									System.out.println("推送内容："+message+" 退送用户："+userPower);
-//									webSocketServer.sendMessage(session,message);
-//								}
-//							}else {
-//								if(type == 1)
-//								{
-//									while (iterator.hasNext()) 
-//									{
-//										Entry<Session,String> entry = iterator.next();
-//										Session session = entry.getKey();
-//										String userPower = entry.getValue();
-//										System.out.println("当前检查："+userPower+"to："+ms.getString("toUserId")+"是否一致"+userPower.equals(ms.getString("toUserId")));
-//										if(userPower.equals(ms.getString("toUserId"))||userPower.equals(ms.getString("fromUserId")))
-//										{
-//											System.out.println("推送内容："+message+" 退送用户："+userPower);
-//											webSocketServer.sendMessage(session,message);
-//										}
-//									}
-//								}
-//							}
-//							
-//						}
 					}					
 				}
 			};

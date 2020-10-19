@@ -1,5 +1,7 @@
 package com.example.demo.Service;
 
+import com.example.demo.data.studentData;
+
 public interface StudentService {
-    void insertStudent(int stu_id,String stu_name,String sex,String year,int school_id,String stu_phone);
+    void insertStudent(studentData stu);
 }

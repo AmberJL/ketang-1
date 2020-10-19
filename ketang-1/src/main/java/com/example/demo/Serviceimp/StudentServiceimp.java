@@ -1,6 +1,7 @@
 package com.example.demo.Serviceimp;
 
 import com.example.demo.Service.StudentService;
+import com.example.demo.data.studentData;
 import com.example.demo.entity.school_table;
 import com.example.demo.entity.student_table;
 import com.example.demo.entity.user_table;
@@ -21,20 +22,20 @@ public class StudentServiceimp implements StudentService {
     @Autowired
     SchoolRespository schoolRespository;
     @Override
-    public void insertStudent(int stu_id, String stu_name, String sex, String year, int school_id, String stu_phone) {
+    public void insertStudent(studentData stu) {
         student_table studentTable = new student_table();
         try{
-            user_table userTable = userRespository.findById(stu_phone).get();
-            school_table schoolTable = schoolRespository.findById(school_id).get();
+            user_table userTable = userRespository.findById(stu.getStu_phone()).get();
+            school_table schoolTable = schoolRespository.findById(stu.getSchool_id()).get();
             if(userTable
                     .getIdentity().equals("T")){
                 System.out.println("身份存在问题！");
             }
             else{
-                studentTable.setStu_id(stu_id);
-                studentTable.setStu_name(stu_name);
-                studentTable.setSex(sex);
-                studentTable.setYear(year);
+                studentTable.setStu_id(stu.getStu_id());
+                studentTable.setStu_name(stu.getStu_name());
+                studentTable.setSex(stu.getSex());
+                studentTable.setYear(stu.getYear());
                 studentTable.setSchoolTable(schoolTable);
                 studentTable.setUserTable(userTable);
                 studentRespository.save(studentTable);

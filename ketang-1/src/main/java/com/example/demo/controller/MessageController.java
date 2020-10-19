@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,23 @@ public class MessageController {
 	public List<messageData> allHistoryMessage(@RequestBody messageData msd) {
 		//全部历史消息
 		return this.messageService.allHistoryMessage(msd.getTo_user_id());
+	}
+	
+	@CrossOrigin
+	@PostMapping(value = "/historyMessage")
+	@ResponseBody
+	public List<messageData> historyMessage(@RequestBody messageData msd) {
+		System.out.println("查询最后时间"+new Date(msd.getTime()).toLocaleString());
+		//全部历史消息
+		return this.messageService.historyMessage(msd.getTo_user_id(), msd.getTime());
+	}
+	@CrossOrigin
+	@PostMapping(value = "/toRead")
+	@ResponseBody
+	public void toRead(@RequestBody messageData msd) {
+		System.out.println("变更状态最后时间"+new Date(msd.getTime()).toLocaleString());
+		//全部历史消息
+		this.messageService.changeToRead(msd.getTo_user_id(), msd.getFrom_user_id(), msd.getTime());
 	}
 	
 }
