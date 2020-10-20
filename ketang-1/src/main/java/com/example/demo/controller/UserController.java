@@ -52,4 +52,17 @@ public class UserController {
 		System.out.println("我是:"+phone+"修改密码controller");
 		return this.userService.forget_pwd(user);
 	}
+	@CrossOrigin
+	@PostMapping(value = "/infoCheck")
+	@ResponseBody
+	public int infoCheck(@RequestBody userData user) {
+		//检查用户是否完善过信息
+		HashMap<String,String> t = new HashMap();
+		t.put("key", user.getKey());
+		t.put("value", user.getUser_phone());
+		String phone = AES.decode(t);
+		System.out.println("我是:"+phone+"student controller");
+		
+		return 100;
+	}
 }

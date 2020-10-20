@@ -6,9 +6,11 @@ import com.example.demo.c.MD5;
 import com.example.demo.data.userData;
 import com.example.demo.entity.admin_table;
 import com.example.demo.entity.student_table;
+import com.example.demo.entity.teacher_table;
 import com.example.demo.entity.user_table;
 import com.example.demo.repository.AdminRespository;
 import com.example.demo.repository.StudentRespository;
+import com.example.demo.repository.TeacherRespository;
 import com.example.demo.repository.UserRespository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,6 +28,8 @@ public class UserServiceImp implements UserService {
     
     @Autowired
     private StudentRespository student;
+    @Autowired
+    private TeacherRespository teacher;
 
     public void Testlogin(String phone, String pwd) {
 
@@ -87,7 +91,27 @@ public class UserServiceImp implements UserService {
 		if(res.size() == 1)
 		{
 			user_table u = res.get(0);
-			return u.getIdentity().equals("S") ? 400 : 500;	
+			String identity = u.getIdentity();
+			try {
+				if(identity.equals("S")){
+					System.out.println("检查学生信息完善？");
+					student_table st = this.student.findByPhone(u.getUserphone());
+					if(st == null)
+						return 800;
+					return 400;
+				}else{
+					System.out.println("检查老师信息完善？");
+					teacher_table tea = this.teacher.findByPhone(u.getUserphone());
+					if(tea == null)
+						return 800;
+					return 500;
+				}
+				
+			}catch(Exception e) {
+				System.out.println("800");
+				return 800;
+			}
+			
 			
 		}else {
 			return 401;
@@ -112,6 +136,24 @@ public class UserServiceImp implements UserService {
 			return 400;
 		}
 		
+	}
+
+	@Override
+	public int infoCheck(userData user) {
+		// TODO Auto-generated method stub
+//		String id = user.getIdentity();
+//		try {
+//			
+//		}catch(Exception) {
+//			
+//		}
+//		if(id.equals("S"))
+//		{
+//			student_table t =  this.student.findByPhone(user.getUser_phone());
+//		}else if(id.equals("T")) {
+//			
+//		}
+		return 0;
 	}
 
 
