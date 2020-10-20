@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public class TeacherController {
     @Autowired
     TeacherService teacherService;
-    //教师插入信息，若用户不存在则返回100，没有学校返回101，身份存在问题返回110，插入成功返回111
+    //教师插入信息，若用户不存在则返回100，没有学校返回101，身份存在问题返回110，插入成功返回200
     @CrossOrigin
     @PostMapping(value = "/insertTea")
     @ResponseBody
