@@ -30,7 +30,7 @@ public class NoticeServiceimp implements NoticeService {
 		try {
 			courseDao.findById(course_id).get();
 		}catch(Exception e) {
-			return "课程不存在";
+			return "2";//课程不存在
 		}
 		
 		
@@ -40,9 +40,9 @@ public class NoticeServiceimp implements NoticeService {
 		temp.setValue(value);
 		try {
 			dao.save(temp);
-			return "发布成功";
+			return "1";//发布成功
 		}catch(Exception e) {
-			return "发布失败";
+			return "0";//发布失败
 		}
 	}
 
@@ -57,9 +57,9 @@ public class NoticeServiceimp implements NoticeService {
 	public String remove(String course_id, String fb_time) {
 		try {
 			dao.deleteById(new course_time_key(course_id,fb_time));
-			return "删除成功";
+			return "1";//删除成功
 		}catch(Exception e) {
-			return "删除失败";
+			return "0";//删除失败
 		}
 	}
 
