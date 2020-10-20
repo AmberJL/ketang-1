@@ -13,4 +13,5 @@ public class  studentData {
     private int school_id;
     private String stu_phone;
     private String stu_id;
+    private int pic_id;
 }

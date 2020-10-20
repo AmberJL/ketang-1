@@ -63,7 +63,7 @@ public class TeacherServiceimp implements TeacherService {
                 teacherTable.setTeacherid(tea_id);
                 teacherRespository.save(teacherTable);
                 System.out.println("插入教师表成功！");
-                return 111;
+                return 200;
             }
     }
 }

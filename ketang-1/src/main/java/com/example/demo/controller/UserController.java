@@ -53,7 +53,7 @@ public class UserController {
 		return this.userService.forget_pwd(user);
 	}
 	@CrossOrigin
-	@PostMapping(value = "/infoCheck")
+	@PostMapping(value = "/updateInfo")
 	@ResponseBody
 	public int infoCheck(@RequestBody userData user) {
 		//检查用户是否完善过信息

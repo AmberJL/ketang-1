@@ -24,6 +24,6 @@ public class teacher_table {
     private int schoolid;
     @Column(name = "teacher_id")
     private String teacherid;
-
-
+    @Column(name = "pic_id")
+    private int pic_id;
 }

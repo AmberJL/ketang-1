@@ -138,23 +138,23 @@ public class UserServiceImp implements UserService {
 		
 	}
 
-	@Override
-	public int infoCheck(userData user) {
-		// TODO Auto-generated method stub
-//		String id = user.getIdentity();
-//		try {
-//			
-//		}catch(Exception) {
-//			
-//		}
-//		if(id.equals("S"))
-//		{
-//			student_table t =  this.student.findByPhone(user.getUser_phone());
-//		}else if(id.equals("T")) {
-//			
-//		}
-		return 0;
-	}
+//	@Override
+//	public int infoCheck(userData user) {
+//		// TODO Auto-generated method stub
+////		String id = user.getIdentity();
+////		try {
+////			
+////		}catch(Exception) {
+////			
+////		}
+////		if(id.equals("S"))
+////		{
+////			student_table t =  this.student.findByPhone(user.getUser_phone());
+////		}else if(id.equals("T")) {
+////			
+////		}
+//		return 0;
+//	}
 
 
 

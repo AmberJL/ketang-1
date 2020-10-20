@@ -1,6 +1,7 @@
 package com.example.demo.Serviceimp;
 
 import com.example.demo.Service.StudentService;
+import com.example.demo.data.studentData;
 import com.example.demo.entity.school_table;
 import com.example.demo.entity.student_table;
 import com.example.demo.entity.user_table;
@@ -21,27 +22,32 @@ public class StudentServiceimp implements StudentService {
     @Autowired
     SchoolRespository schoolRespository;
     @Override
-    public void insertStudent(String stu_name, String sex, String year, int school_id, String stu_phone) {
+    public int insertStudent(studentData stu) {
         student_table studentTable = new student_table();
         try{
-            user_table userTable = userRespository.findById(stu_phone).get();
-            school_table schoolTable = schoolRespository.findById(school_id).get();
+            user_table userTable = userRespository.findById(stu.getStu_phone()).get();
+            school_table schoolTable = schoolRespository.findById(stu.getSchool_id()).get();
             if(userTable
                     .getIdentity().equals("T")){
                 System.out.println("身份存在问题！");
+                return 199;
             }
             else{
-                studentTable.setStuname(stu_name);
-                studentTable.setSex(sex);
-                studentTable.setYear(year);
-                studentTable.setSchoolid(school_id);
-                studentTable.setPhone(stu_phone);
+                studentTable.setStuname(stu.getStu_name());
+                studentTable.setSex(stu.getSex());
+                studentTable.setYear(stu.getYear());
+                studentTable.setSchoolid(stu.getSchool_id());
+                studentTable.setPhone(stu.getStu_phone());
+                studentTable.setStuid(stu.getStu_id());
+                studentTable.setPic_id(stu.getPic_id());
                 studentRespository.save(studentTable);
                 System.out.println("学生信息插入成功！");
+                return 200;
             }
         }
         catch (NoSuchElementException Exception){
                 System.out.println("没有该用户！");
+                return 199;
         }
     }
 }

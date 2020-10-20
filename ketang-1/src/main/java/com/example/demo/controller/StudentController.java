@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.Service.StudentService;
 import com.example.demo.c.AES;
+import com.example.demo.data.studentData;
+import com.example.demo.data.teacherData;
 import com.example.demo.data.userData;
 
 import lombok.extern.slf4j.Slf4j;
@@ -23,5 +25,10 @@ public class StudentController {
 	@Autowired
 	StudentService student;
 	
-	
+	@CrossOrigin
+    @PostMapping(value = "/insertStu")
+    @ResponseBody
+    public int InsertStudent(@RequestBody studentData data){
+        return student.insertStudent(data);
+    }
 }

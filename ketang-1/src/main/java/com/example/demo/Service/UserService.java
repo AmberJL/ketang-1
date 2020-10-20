@@ -7,5 +7,4 @@ public interface UserService {
     int signUp(userData user);
     int login(userData user);
     int forget_pwd(userData user);
-    int infoCheck(userData user);
 }

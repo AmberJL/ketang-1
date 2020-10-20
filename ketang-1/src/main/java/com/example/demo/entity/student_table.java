@@ -21,5 +21,7 @@ public class student_table {
     private int schoolid;
     @Column(name = "stu_id")
     private String stuid;
+    @Column(name = "pic_id")
+    private int pic_id;
 
 }
