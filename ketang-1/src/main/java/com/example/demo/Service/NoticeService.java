@@ -6,7 +6,7 @@ import com.example.demo.entity.notice_table;
 
 public interface NoticeService {
 	//老师添加公告
-	public String add(String course_id,String value);
+	public String add(String course_id,String value,String title);
 	
 	//获取公告列表
 	public List<notice_table> get(String course_id);

@@ -28,13 +28,17 @@ public class NoticeController {
 		
 		String course_id=p.course_id;
 		String value=p.value;
+		String title=p.title;
 		
-		String temp=noticeService.add(course_id, value);
+		String temp=noticeService.add(course_id, value, title);
 		
-		if("发布成功".equals(temp)) {
+		if("1".equals(temp)) {
 			// TODO
 			/**
 			 * 这里可以广播通知公告
+			 * course_id为课程id
+			 * 可以根据选课表查到学生列表依次广播
+			 * 
 			 */
 		}
 		
@@ -75,14 +79,17 @@ public class NoticeController {
 		public static class notice{
 			public String fb_time;
 			public String value;
+			public String title;
 			public notice(notice_table p) {
 				this.fb_time=p.getFbtime();
 				this.value=p.getValue();
+				this.title=p.getTitle();
 			}
 		}
 		public static class addPara{
 			public String course_id;
 			public String value;
+			public String title;
 		}
 		public static class getPara{
 			public String course_id;

@@ -25,7 +25,7 @@ public class NoticeServiceimp implements NoticeService {
 
 	//老师添加公告
 	@Override
-	public String add(String course_id, String value) {
+	public String add(String course_id, String value, String title) {
 		
 		try {
 			courseDao.findById(course_id).get();
@@ -38,6 +38,7 @@ public class NoticeServiceimp implements NoticeService {
 		temp.setCourseid(course_id);
 		temp.setFbtime(Time.getTime());
 		temp.setValue(value);
+		temp.setTitle(title);
 		try {
 			dao.save(temp);
 			return "1";//发布成功

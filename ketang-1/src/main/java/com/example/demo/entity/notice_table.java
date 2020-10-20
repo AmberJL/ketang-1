@@ -32,6 +32,10 @@ public class notice_table {
 	//公告内容
 	@Column(name = "value")
 	private String value;
+	
+	//公告标题
+	@Column(name = "title")
+	private String title;
 
 	
 	
@@ -65,5 +69,13 @@ public class notice_table {
 
 	public void setValue(String value) {
 		this.value = value;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 }
