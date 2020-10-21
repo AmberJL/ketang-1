@@ -128,6 +128,16 @@ public class QiandaoController {
 		
 		return qiandaoService.qd(student_phone, course_id, fb_time, code);
 	}
+	//老师重置签到时间
+	@RequestMapping("/resetTime")
+	public String resetTime(pack.resetTimePara p) {
+		
+		String course_id=p.course_id;
+		String fb_time=p.fb_time;
+		long jz_long=p.jz_long;
+		
+		return qiandaoService.resetTime(course_id, fb_time, jz_long);
+	}
 	
 	
 	
@@ -226,6 +236,11 @@ public class QiandaoController {
 			public String course_id;
 			public String fb_time;
 			public String code;
+		}
+		public static class resetTimePara{
+			public String course_id;
+			public String fb_time;
+			public long jz_long;
 		}
 	}
 }

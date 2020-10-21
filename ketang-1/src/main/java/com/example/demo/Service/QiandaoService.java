@@ -30,4 +30,6 @@ public interface QiandaoService {
 	//学生签到
 	public String qd(String student_phone,String course_id,String fb_time,String code);
 
+	//老师重置签到时间
+	public String resetTime(String course_id,String fb_time,long jz_long);
 }

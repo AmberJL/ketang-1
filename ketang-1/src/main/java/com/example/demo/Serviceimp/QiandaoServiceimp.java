@@ -178,5 +178,17 @@ public class QiandaoServiceimp implements QiandaoService {
 		
 		return "签到成功";
 	}
-
+	
+	//老师重置签到时间
+	@Override
+	public String resetTime(String course_id, String fb_time, long jz_long) {
+		try {
+			qiandao_table temp=qdDao.findById(new course_time_key(course_id,fb_time)).get();
+			temp.setJztime(Time.getTimeNext(jz_long));
+			qdDao.save(temp);
+			return "修改成功";
+		}catch(Exception e) {
+			return "签到不存在";
+		}
+	}
 }
