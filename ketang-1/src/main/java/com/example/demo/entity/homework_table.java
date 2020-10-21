@@ -36,6 +36,10 @@ public class homework_table {
 	//作业题目
 	@Column(name = "value")
 	private String value;
+	
+	//作业标题
+	@Column(name = "title")
+	private String title;
 
 	
 	
@@ -77,5 +81,13 @@ public class homework_table {
 
 	public void setValue(String value) {
 		this.value = value;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 }
