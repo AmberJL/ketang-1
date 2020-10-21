@@ -64,6 +64,18 @@ public class NoticeController {
 		return noticeService.remove(course_id, fb_time);
 	}
 	
+	//修改公告
+	@RequestMapping("/change")
+	public String change(@RequestBody pack.changePara p) {
+		
+		String course_id=p.course_id;
+		String fb_time=p.fb_time;
+		String value=p.value;
+		String title=p.title;
+		
+		return noticeService.change(course_id, fb_time, value, title);
+	}
+	
 	
 	
 	
@@ -97,6 +109,12 @@ public class NoticeController {
 		public static class removePara{
 			public String course_id;
 			public String fb_time;
+		}
+		public static class changePara{
+			public String course_id;
+			public String fb_time;
+			public String title;
+			public String value;
 		}
 	}
 }

@@ -63,5 +63,19 @@ public class NoticeServiceimp implements NoticeService {
 			return "0";//删除失败
 		}
 	}
+	
+	//修改公告
+		@Override
+		public String change(String course_id, String fb_time, String value, String title) {
+			try {
+				notice_table temp=dao.findById(new course_time_key(course_id,fb_time)).get();
+				temp.setTitle(title);
+				temp.setValue(value);
+				dao.save(temp);
+				return "1";//修改成功
+			}catch(Exception e) {
+				return "0";//修改失败
+			}
+		}
 
 }

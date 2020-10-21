@@ -13,4 +13,7 @@ public interface NoticeService {
 
 	//删除公告
 	public String remove(String course_id,String fb_time);
+	
+	//修改公告
+	public String change(String course_id,String fb_time,String value,String title);
 }
