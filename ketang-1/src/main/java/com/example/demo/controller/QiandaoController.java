@@ -43,7 +43,7 @@ public class QiandaoController {
 		
 		String course_id=p.course_id;
 		String name=p.name;
-		String way=p.name;
+		String way=p.way;
 		long jz_long=p.jz_long;
 		
 		String temp=qiandaoService.newQd(course_id,name,way,jz_long);
