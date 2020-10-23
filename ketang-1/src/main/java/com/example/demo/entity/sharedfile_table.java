@@ -36,6 +36,10 @@ public class sharedfile_table {
 	//文件名称
 	@Column(name = "file_name")
 	private String filename;
+	
+	//文件大小
+	@Column(name = "file_size")
+	private String filesize;
 
 	
 	
@@ -77,5 +81,13 @@ public class sharedfile_table {
 
 	public void setFilename(String filename) {
 		this.filename = filename;
+	}
+
+	public String getFilesize() {
+		return filesize;
+	}
+
+	public void setFilesize(String filesize) {
+		this.filesize = filesize;
 	}
 }

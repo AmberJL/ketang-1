@@ -119,10 +119,12 @@ public class SharedfileController {
 			public String file_id;
 			public String file_name;
 			public String fb_time;
+			public String file_size;
 			public fileInfo(sharedfile_table p) {
 				this.file_id=p.getFilepath();
 				this.file_name=p.getFilename();
 				this.fb_time=p.getFbtime();
+				this.file_size=p.getFilesize();
 			}
 		}
 		public static class Para{

@@ -44,6 +44,7 @@ public class SharedfileServiceimp implements SharedfileService{
 			data.setFbtime(Time.getTime());
 			data.setFilename(files.get(i).getOriginalFilename());
 			data.setFilepath(name);
+			data.setFilesize(FileServiceTools.getSize(course_id, name));
 			dao.save(data);
 		}
 		return "上传成功";

@@ -43,6 +43,47 @@ public class FileServiceTools {
 		
 	}
 	
+	public static String getSize(String course_id,String file_id) {
+		
+		File temp=new File(rootPath+"\\"+course_id+"\\"+file_id);
+		return formatSize(temp.length());
+		
+	}
+	private static String formatSize(long size) {
+		long temp;
+		int point=-1;
+		String[] danwei= {"B","KB","MB"};
+		
+		temp=size;
+		
+		for(;;) {
+			switch(point) {
+			case -1:
+				temp=temp/8;
+				point++;
+				continue;
+			case 0:
+				if(temp>1024) {
+					temp=temp/1024;
+					point++;
+					continue;
+				}else
+					return temp+danwei[0];
+			case 1:
+				if(temp>1024) {
+					temp=temp/1024;
+					point++;
+					continue;
+				}else
+					return temp+danwei[1];
+			case 2:
+				return temp+danwei[2];
+			default:
+				return null;
+			}
+		}
+	}
+	
 	private static void checkDir(String course_id) {
 		File file=new File(rootPath+"\\"+course_id);
 		if(file.exists()&&file.isDirectory())return;
