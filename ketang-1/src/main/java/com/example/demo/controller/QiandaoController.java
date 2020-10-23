@@ -199,13 +199,13 @@ public class QiandaoController {
 			public String jz_time;
 			public String name;
 			public String way;
-			public String value;
+			public String style;
 			public qdListStu(qiandao_table p) {
 				this.fb_time=p.getFbtime();
 				this.jz_time=p.getJztime();
 				this.name=p.getName();
 				this.way=p.getWay();
-				this.value=p.getCode();
+				this.style=p.getCode();
 			}
 		}
 		public static class courseidPara{
