@@ -51,17 +51,13 @@ public class FileServiceTools {
 	}
 	private static String formatSize(long size) {
 		long temp;
-		int point=-1;
+		int point=0;
 		String[] danwei= {"B","KB","MB"};
 		
 		temp=size;
 		
 		for(;;) {
 			switch(point) {
-			case -1:
-				temp=temp/8;
-				point++;
-				continue;
 			case 0:
 				if(temp>1024) {
 					temp=temp/1024;
