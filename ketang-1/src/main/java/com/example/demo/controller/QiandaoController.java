@@ -60,7 +60,7 @@ public class QiandaoController {
 	
 	//老师获取单次签到人数
 	@RequestMapping("/getSize")
-	public int getSize(@RequestBody pack.courseidTimePara p) {
+	public String getSize(@RequestBody pack.courseidTimePara p) {
 		
 		String course_id=p.course_id;
 		String fb_time=p.fb_time;
@@ -172,7 +172,7 @@ public class QiandaoController {
 			public String name;
 			public String way;
 			public String value;
-			public int qd_size;
+			public String qd_size;
 			public qdListTeacher(qiandao_table p){
 				this.fb_time=p.getFbtime();
 				this.jz_time=p.getJztime();

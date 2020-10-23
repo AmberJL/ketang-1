@@ -13,7 +13,7 @@ public interface QiandaoService {
 	public String newQd(String course_id,String name,String way,long jz_long);
 	
 	////老师获取单次签到人数
-	public int getSize(String course_id, String fb_time);
+	public String getSize(String course_id, String fb_time);
 	
 	//老师获取单次签到详情
 	public List<qiandao_log_table> getValue(String course_id,String fb_time);
