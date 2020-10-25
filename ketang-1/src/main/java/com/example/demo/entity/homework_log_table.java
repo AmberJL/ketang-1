@@ -47,6 +47,9 @@ public class homework_log_table {
 	@Column(name = "file_name")
 	private String filename;
 
+	//文件大小
+	@Column(name = "file_size")
+	private String filesize;
 	
 	
 	public homework_log_key getKey() {
@@ -104,4 +107,13 @@ public class homework_log_table {
 	public void setFilename(String filename) {
 		this.filename = filename;
 	}
+
+	public String getFilesize() {
+		return filesize;
+	}
+
+	public void setFilesize(String filesize) {
+		this.filesize = filesize;
+	}
+	
 }

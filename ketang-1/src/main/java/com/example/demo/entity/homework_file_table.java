@@ -37,6 +37,10 @@ public class homework_file_table {
 	//文件名称
 	@Column(name = "file_name")
 	private String filename;
+	
+	//文件大小
+	@Column(name = "file_size")
+	private String filesize;
 
 	public homework_file_key getKey() {
 		return key;
@@ -77,4 +81,13 @@ public class homework_file_table {
 	public void setCourseid(String courseid) {
 		this.courseid = courseid;
 	}
+
+	public String getFilesize() {
+		return filesize;
+	}
+
+	public void setFilesize(String filesize) {
+		this.filesize = filesize;
+	}
+	
 }
