@@ -207,12 +207,14 @@ public class HomeworkController {
 			String fb_time;
 			String file_id;
 			String file_name;
+			String file_size;
 			String mode;
 			public fileInfo(homework_file_table p) {
 				this.course_id=p.getCourseid();
 				this.fb_time=p.getFbtime();
 				this.file_id=p.getFilepath();
 				this.file_name=p.getFilename();
+				this.file_size=p.getFilesize();
 				this.mode="tea";
 			}
 			public fileInfo(homework_log_table p) {
@@ -220,6 +222,7 @@ public class HomeworkController {
 				this.fb_time=p.getFbtime();
 				this.file_id=p.getFilepath();
 				this.file_name=p.getFilename();
+				this.file_size=p.getFilesize();
 				this.mode="stu";
 			}
 		}
