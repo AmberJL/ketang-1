@@ -12,15 +12,19 @@ import com.example.demo.Service.QiandaoService;
 import com.example.demo.Serviceimp.QiandaoServiceimp;
 import com.example.demo.entity.qiandao_log_table;
 import com.example.demo.entity.qiandao_table;
+import com.example.demo.entity.student_table;
+import com.example.demo.repository.StudentRespository;
 
 @RestController
 @RequestMapping("/qiandao")
 public class QiandaoController {
 	
 	private final QiandaoService qiandaoService;
+	private final StudentRespository stuDao;
 
-	public QiandaoController(@Autowired QiandaoServiceimp qiandaoService) {
+	public QiandaoController(@Autowired QiandaoServiceimp qiandaoService,@Autowired StudentRespository stuDao) {
 		this.qiandaoService=qiandaoService;
+		this.stuDao=stuDao;
 	}
 	
 	//老师获取签到列表
@@ -75,12 +79,17 @@ public class QiandaoController {
 		String course_id=p.course_id;
 		String fb_time=p.fb_time;
 		
-		List<?> temp=pack.parseQdInfoTeacher(qiandaoService.getValue(course_id, fb_time));
+		List<pack.qdInfoTeacher> temp=pack.parseQdInfoTeacher(qiandaoService.getValue(course_id, fb_time));
 		
-		// TODO
-		/**
-		 * 这里查询学生表添加学生姓名和学号
-		 */
+		for(int i=0;i<temp.size();i++) {
+			pack.qdInfoTeacher temp2=temp.get(i);
+			try {
+				student_table table=stuDao.findByPhone(temp2.stu_phone);
+				temp2.stu_id=table.getStuid();
+				temp2.stu_name=table.getClass();
+				temp2.pic_id=table.getPic_id();
+			}catch(Exception e) {}
+		}
 		
 		return temp;
 	}
@@ -188,6 +197,7 @@ public class QiandaoController {
 			public String stu_id;
 			public String qd_time;
 			public String value;
+			public String pic_id;
 			public qdInfoTeacher(qiandao_log_table p) {
 				this.stu_phone=p.getStuphone();
 				this.qd_time=p.getQdtime();
