@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -49,37 +51,61 @@ public class HomeworkController {
 	
 	//获取作业列表
 	@RequestMapping("/getList")
-	public List<homework_table> getList(String course_id) {
-		return homeworkService.getList(course_id);
+	public List<?> getList(@RequestBody pack.para p) {
+		
+		String course_id=p.course_id;
+		
+		return pack.parseHomework(homeworkService.getList(course_id));
 	}
 	
 	//删除作业
 	@RequestMapping("/remove")
-	public String remove(String course_id, String fb_time) {
+	public String remove(@RequestBody pack.para p) {
+		
+		String course_id=p.course_id;
+		String fb_time=p.fb_time;
+		
 		return homeworkService.remove(course_id, fb_time);
 	}
 	
 	//获取作业详情
 	@RequestMapping("/getInfo")
-	public homework_table getInfo(String course_id, String fb_time) {
-		return homeworkService.getInfo(course_id, fb_time);
+	public Object getInfo(@RequestBody pack.para p) {
+		
+		String course_id=p.course_id;
+		String fb_time=p.fb_time;
+		
+		return new pack.homework(homeworkService.getInfo(course_id, fb_time));
 	}
 	
 	//获取作业附件列表
 	@RequestMapping("/getInfoFileList")
-	public List<homework_file_table> getInfoFileList(String course_id,String fb_time){
-		return homeworkService.getInfoFileList(course_id, fb_time);
+	public List<?> getInfoFileList(@RequestBody pack.para p){
+		
+		String course_id=p.course_id;
+		String fb_time=p.fb_time;
+		
+		return pack.parseFileInfoTea(homeworkService.getInfoFileList(course_id, fb_time));
 	}
 	
 	//获取提交详情
-	public List getLog(String course_id, String fb_time) {
-		return homeworkService.getLog(course_id, fb_time);
+	public List<?> getLog(@RequestBody pack.para p) {
+		
+		String course_id=p.course_id;
+		String fb_time=p.fb_time;
+		
+		return pack.parseStuInfo(homeworkService.getLog(course_id, fb_time));
 	}
 	
 	//获取学生提交的文件列表
 	@RequestMapping("/getHomework")
-	public List<homework_log_table> getHomework(String course_id, String fb_time, String stu_phone) {
-		return homeworkService.getHomework(course_id, fb_time, stu_phone);
+	public List<?> getHomework(@RequestBody pack.para p) {
+		
+		String course_id=p.course_id;
+		String fb_time=p.fb_time;
+		String stu_phone=p.stu_phone;
+		
+		return pack.parseFileInfoStu(homeworkService.getHomework(course_id, fb_time, stu_phone));
 	}
 	
 	//提交作业
@@ -134,4 +160,85 @@ public class HomeworkController {
         } catch (IOException e) {}
 	}
 
+	//包装参数和返回值
+	private static class pack{
+		public static List<stuLogInfo> parseStuInfo(List<Map<String,String>> p){
+			List<stuLogInfo> temp=new ArrayList<stuLogInfo>();
+			for(int i=0;i<p.size();i++) {
+				temp.add(new stuLogInfo(p.get(i)));
+			}
+			return temp;
+		}
+		public static List<fileInfo> parseFileInfoTea(List<homework_file_table> p){
+			List<fileInfo> temp=new ArrayList<fileInfo>();
+			for(int i=0;i<p.size();i++) {
+				temp.add(new fileInfo(p.get(i)));
+			}
+			return temp;
+		}
+		public static List<fileInfo> parseFileInfoStu(List<homework_log_table> p){
+			List<fileInfo> temp=new ArrayList<fileInfo>();
+			for(int i=0;i<p.size();i++) {
+				temp.add(new fileInfo(p.get(i)));
+			}
+			return temp;
+		}
+		public static List<homework> parseHomework(List<homework_table> p){
+			List<homework> temp=new ArrayList<homework>();
+			for(int i=0;i<p.size();i++) {
+				temp.add(new homework(p.get(i)));
+			}
+			return temp;
+		}
+		public static class homework{
+			String fb_time;
+			String jz_time;
+			String value;
+			String title;
+			public homework(homework_table p) {
+				this.fb_time=p.getFbtime();
+				this.jz_time=p.getJztime();
+				this.value=p.getValue();
+				this.title=p.getTitle();
+			}
+		}
+		public static class fileInfo{
+			String course_id;
+			String fb_time;
+			String file_id;
+			String file_name;
+			String mode;
+			public fileInfo(homework_file_table p) {
+				this.course_id=p.getCourseid();
+				this.fb_time=p.getFbtime();
+				this.file_id=p.getFilepath();
+				this.file_name=p.getFilename();
+				this.mode="tea";
+			}
+			public fileInfo(homework_log_table p) {
+				this.course_id=p.getCourseid();
+				this.fb_time=p.getFbtime();
+				this.file_id=p.getFilepath();
+				this.file_name=p.getFilename();
+				this.mode="stu";
+			}
+		}
+		public static class stuLogInfo{
+			String stu_id;
+			String stu_phone;
+			String stu_name;
+			String value;
+			public stuLogInfo(Map<String,String> p) {
+				this.stu_id=p.get("stu_id");
+				this.stu_name=p.get("name");
+				this.stu_phone=p.get("stu_phone");
+				this.value=p.get("value");
+			}
+		}
+		public static class para{
+			String course_id;
+			String fb_time;
+			String stu_phone;
+		}
+	}
 }
