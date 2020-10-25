@@ -14,11 +14,13 @@ import com.example.demo.entity.course_log_table;
 import com.example.demo.entity.homework_file_table;
 import com.example.demo.entity.homework_log_table;
 import com.example.demo.entity.homework_table;
+import com.example.demo.entity.student_table;
 import com.example.demo.entity.key.course_time_key;
 import com.example.demo.repository.CourseLogRepositpry;
 import com.example.demo.repository.HomeworkFileRespository;
 import com.example.demo.repository.HomeworkLogRespository;
 import com.example.demo.repository.HomeworkRespository;
+import com.example.demo.repository.StudentRespository;
 import com.example.demo.tool.Time;
 
 @Service
@@ -28,12 +30,14 @@ public class HomeworkServiceimp implements HomeworkService {
 	private final HomeworkLogRespository logDao;
 	private final HomeworkFileRespository fileDao;
 	private final CourseLogRepositpry cLogDao;
+	private final StudentRespository stuDao;
 	
-	public HomeworkServiceimp (@Autowired HomeworkRespository dao,@Autowired HomeworkLogRespository logDao,@Autowired HomeworkFileRespository fileDao,@Autowired CourseLogRepositpry cLogDao) {
+	public HomeworkServiceimp (@Autowired HomeworkRespository dao,@Autowired HomeworkLogRespository logDao,@Autowired HomeworkFileRespository fileDao,@Autowired CourseLogRepositpry cLogDao,@Autowired StudentRespository stuDao) {
 		this.cLogDao = cLogDao;
 		this.fileDao = fileDao;
 		this.dao = dao;
 		this.logDao = logDao;
+		this.stuDao = stuDao;
 		
 	}
 
@@ -133,14 +137,15 @@ public class HomeworkServiceimp implements HomeworkService {
 			else
 				temp.put("value","未提交");
 			
-			/**
-			 * 
-			 * 姓名 学号
-			 * 
-			 * 
-			 */
-			temp.put("name", null);
-			temp.put("stu_id", null);
+			try {
+				student_table stu=stuDao.findByPhone(phone);
+				temp.put("name", stu.getStuname());
+				temp.put("stu_id", stu.getStuid());
+			}catch(Exception e) {
+				e.printStackTrace();
+				temp.put("name", null);
+				temp.put("stu_id", null);
+			}
 			
 			
 			log.add(temp);
