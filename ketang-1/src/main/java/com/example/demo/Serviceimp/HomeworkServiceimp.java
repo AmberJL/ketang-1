@@ -60,6 +60,7 @@ public class HomeworkServiceimp implements HomeworkService {
 			data.setFbtime(fb_time);
 			data.setFilename(files.get(i).getOriginalFilename());
 			data.setFilepath(name);
+			data.setFilesize(FileServiceTools.getSize(course_id, name));
 			fileDao.save(data);
 		}
 		homework_table homework=new homework_table();
@@ -209,6 +210,7 @@ public class HomeworkServiceimp implements HomeworkService {
 			data.setStuphone(stu_phone);
 			data.setFilename(files.get(i).getOriginalFilename());
 			data.setFilepath(name);
+			data.setFilesize(FileServiceTools.getSize(course_id, name));
 			logDao.save(data);
 		}
 		
