@@ -147,6 +147,30 @@ public class QiandaoController {
 		
 		return qiandaoService.resetTime(course_id, fb_time, jz_long);
 	}
+	//老师发布GPS
+	@RequestMapping("/newQdGPS")
+	public String newQdGPS(@RequestBody pack.fbqdPara p) {
+		
+		String course_id=p.course_id;
+		String name=p.name;
+		String way=p.way;
+		long jz_long=p.jz_long;
+		String gps=p.gps;
+		
+		return qiandaoService.newQdGPS(course_id, name, way, jz_long, gps);
+	}
+	
+	//学生GPS签到
+	@RequestMapping("/qdGPS")
+	public String qdGPS(@RequestBody pack.qdPara p) {
+		
+		String student_phone=p.student_phone;
+		String course_id=p.course_id;
+		String fb_time=p.fb_time;
+		String gps=p.gps;
+		
+		return qiandaoService.qdGPS(student_phone, course_id, fb_time, gps);
+	}
 	
 	
 	
@@ -226,6 +250,7 @@ public class QiandaoController {
 			public String name;
 			public String way;
 			public long jz_long;
+			public String gps;
 		}
 		public static class courseidTimePara{
 			public String course_id;
@@ -246,6 +271,7 @@ public class QiandaoController {
 			public String course_id;
 			public String fb_time;
 			public String code;
+			public String gps;
 		}
 		public static class resetTimePara{
 			public String course_id;

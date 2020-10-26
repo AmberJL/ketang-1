@@ -12,7 +12,7 @@ public interface QiandaoService {
 	//老师发布签到
 	public String newQd(String course_id,String name,String way,long jz_long);
 	
-	////老师获取单次签到人数
+	//老师获取单次签到人数
 	public String getSize(String course_id, String fb_time);
 	
 	//老师获取单次签到详情
@@ -32,4 +32,10 @@ public interface QiandaoService {
 
 	//老师重置签到时间
 	public String resetTime(String course_id,String fb_time,long jz_long);
+	
+	//老师发布GPS
+	public String newQdGPS(String course_id,String name,String way,long jz_long,String gps);
+	
+	//学生GPS签到
+	public String qdGPS(String student_phone,String course_id,String fb_time,String gps);
 }

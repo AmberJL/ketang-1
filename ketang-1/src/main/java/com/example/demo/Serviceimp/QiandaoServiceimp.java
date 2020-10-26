@@ -191,4 +191,68 @@ public class QiandaoServiceimp implements QiandaoService {
 			return "签到不存在";
 		}
 	}
+
+	//学生GPS签到
+	@Override
+	public String qdGPS(String student_phone, String course_id, String fb_time, String gps) {
+		qiandao_table qd;
+		try {
+			qd=qdDao.findById(new course_time_key(course_id,fb_time)).get();
+		}catch(Exception e) {
+			return "签到不存在";
+		}
+		
+		
+		//TODO GPS判断
+		
+		if(false) {
+			return "GPS位置过远";
+		}
+		
+		
+		
+		
+		String time=Time.getTime();
+		
+		if(Time.getDate(qd.getJztime()).getTime() < Time.getDate(time).getTime()) 
+			return "签到已截止";
+		
+		qiandao_log_table qdLog;
+		try {
+			qdLog=qdLogDao.findById(new course_time_phone_key(course_id,fb_time,student_phone)).get();
+			qdLog.setQdtime(time);
+			qdLog.setValue("已签到");
+		}catch(Exception e) {
+			qdLog=new qiandao_log_table();
+			qdLog.setCourseid(course_id);
+			qdLog.setFbtime(fb_time);
+			qdLog.setQdtime(time);
+			qdLog.setStuphone(student_phone);
+			qdLog.setValue("已签到");
+		}
+		
+		qdLogDao.save(qdLog);
+		
+		return "签到成功";
+	}
+
+	//老师发布GPS
+	@Override
+	public String newQdGPS(String course_id, String name, String way, long jz_long, String gps) {
+		try {
+			cDao.findById(course_id).get();
+		}catch(Exception e) {
+			return "课程不存在";
+		}
+		
+		qiandao_table temp=new qiandao_table();
+		temp.setCourseid(course_id);
+		temp.setFbtime(Time.getTime());
+		temp.setJztime(Time.getTimeNext(jz_long));
+		temp.setName(name);
+		temp.setWay(way);
+		temp.setCode(gps);
+		qdDao.save(temp);
+		return gps;
+	}
 }
