@@ -203,19 +203,30 @@ public class QiandaoServiceimp implements QiandaoService {
 		}
 		
 		
-		//TODO GPS判断
+		String time=Time.getTime();
+		if(Time.getDate(qd.getJztime()).getTime() < Time.getDate(time).getTime()) 
+			return "签到已截止";
 		
-		if(false) {
+		
+		// GPS判断
+		String[] locate;
+		double lng1,lat1,lng2,lat2,s;
+		try {
+			locate=qd.getCode().split(",");
+			lng1=Integer.parseInt(locate[0]);
+			lat1=Integer.parseInt(locate[1]);
+			locate=gps.split(",");
+			lng2=Integer.parseInt(locate[0]);
+			lat2=Integer.parseInt(locate[1]);
+			s=getDistanceMeter(lng1, lat1, lng2, lat2);
+		}catch(Exception e) {
+			return "GPS计算错误";
+		}
+		
+		if(s>500) {
 			return "GPS位置过远";
 		}
 		
-		
-		
-		
-		String time=Time.getTime();
-		
-		if(Time.getDate(qd.getJztime()).getTime() < Time.getDate(time).getTime()) 
-			return "签到已截止";
 		
 		qiandao_log_table qdLog;
 		try {
@@ -255,4 +266,23 @@ public class QiandaoServiceimp implements QiandaoService {
 		qdDao.save(temp);
 		return gps;
 	}
+	
+	//以下是GPS计算
+	private static double getDistanceMeter(double lng1, double lat1, double lng2, double lat2) {
+		double radLat1 = rad(lat1);
+		double radLat2 = rad(lat2);
+		double a = radLat1 - radLat2;
+		double b = rad(lng1) - rad(lng2);
+		double s = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a / 2), 2)+ Math.cos(radLat1) * Math.cos(radLat2)* Math.pow(Math.sin(b / 2), 2)));
+		s = s * EARTH_RADIUS;
+		s = Math.round(s * 10000d) / 10000d;
+		s = s * 1000;
+		return s;
+	}
+	private static double rad(double d) {
+        return d * PI / 180.0;
+    }
+	private static final String TAG = "GetDistanceUtils";
+    private static final double EARTH_RADIUS = 6378.137;
+    private static final double PI = 3.14159265;
 }
