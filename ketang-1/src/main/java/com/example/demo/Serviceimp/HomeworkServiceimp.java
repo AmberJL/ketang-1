@@ -16,6 +16,7 @@ import com.example.demo.entity.homework_log_table;
 import com.example.demo.entity.homework_table;
 import com.example.demo.entity.student_table;
 import com.example.demo.entity.key.course_time_key;
+import com.example.demo.entity.key.homework_log_key;
 import com.example.demo.repository.CourseLogRepositpry;
 import com.example.demo.repository.HomeworkFileRespository;
 import com.example.demo.repository.HomeworkLogRespository;
@@ -227,6 +228,50 @@ public class HomeworkServiceimp implements HomeworkService {
 		}catch(Exception e) {
 			return null;
 		}
+	}
+
+	//修改作业
+	@Override
+	public String update(String course_id, String fb_time, String title, String value, long jz_long) {
+		homework_table homework;
+		try {
+			homework=dao.findById(new course_time_key(course_id,fb_time)).get();
+		}catch(Exception e) {
+			return "作业不存在";
+		}
+		homework.setTitle(title);
+		homework.setValue(value);
+		homework.setJztime(Time.getTimeNext(jz_long));
+		dao.save(homework);
+		
+		return "修改成功";
+	}
+
+	//学生删除作业文件
+	@Override
+	public String removeLog(String course_id, String fb_time, String stu_phone, String file_id) {
+		homework_log_table logTable;
+		homework_table hw;
+		
+		try {
+			hw=dao.findById(new course_time_key(course_id,fb_time)).get();
+		}catch(Exception e) {
+			return "作业不存在";
+		}
+		
+		try {
+			logTable=logDao.findById(new homework_log_key(course_id,fb_time,stu_phone,file_id)).get();
+		}catch(Exception e) {
+			return "文件不存在";
+		}
+		
+		
+		if(Time.getDate(hw.getJztime()).getTime() < Time.getDate(Time.getTime()).getTime()) 
+			return "已截止";
+		
+		//FileServiceTools.delete(course_id,file_id);
+		logDao.deleteById(new homework_log_key(course_id,fb_time,stu_phone,file_id));
+		return "删除成功";
 	}
 
 }

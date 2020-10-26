@@ -49,6 +49,19 @@ public class HomeworkController {
 		return homeworkService.add(files, course_id, title, value, jz_long);
 	}
 	
+	//修改作业
+	@RequestMapping("/update")
+	public String update(@RequestBody pack.para p) {
+		
+		String course_id=p.course_id;
+		String fb_time=p.fb_time;
+		String title=p.title;
+		String value=p.value;
+		long jz_long=p.jz_long;
+		
+		return homeworkService.update(course_id, fb_time, title, value, jz_long);
+	}
+	
 	//获取作业列表
 	@RequestMapping("/getList")
 	public List<?> getList(@RequestBody pack.para p) {
@@ -117,6 +130,19 @@ public class HomeworkController {
 		String stu_phone=param.get("stu_phone");
 		
 		return homeworkService.put(files, course_id, fb_time, stu_phone);
+	}
+	
+	//学生删除作业文件
+	@RequestMapping("/removeLog")
+	public String removeLog(@RequestBody pack.para p) {
+		
+		String course_id=p.course_id;
+		String fb_time=p.fb_time;
+		String stu_phone=p.stu_phone;
+		String file_id=p.file_id;
+		
+		return homeworkService.removeLog(course_id, fb_time, stu_phone, file_id);
+		
 	}
 	
 	//下载
@@ -242,6 +268,10 @@ public class HomeworkController {
 			String course_id;
 			String fb_time;
 			String stu_phone;
+			String file_id;
+			String title;
+			String value;
+			long jz_long;
 		}
 	}
 }
