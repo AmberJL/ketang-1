@@ -213,11 +213,11 @@ public class QiandaoServiceimp implements QiandaoService {
 		double lng1,lat1,lng2,lat2,s;
 		try {
 			locate=qd.getCode().split(",");
-			lng1=Integer.parseInt(locate[0]);
-			lat1=Integer.parseInt(locate[1]);
+			lng1=Double.parseDouble(locate[0]);
+			lat1=Double.parseDouble(locate[1]);
 			locate=gps.split(",");
-			lng2=Integer.parseInt(locate[0]);
-			lat2=Integer.parseInt(locate[1]);
+			lng2=Double.parseDouble(locate[0]);
+			lat2=Double.parseDouble(locate[1]);
 			s=getDistanceMeter(lng1, lat1, lng2, lat2);
 		}catch(Exception e) {
 			return "GPS计算错误";
