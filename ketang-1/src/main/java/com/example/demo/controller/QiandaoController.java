@@ -86,7 +86,7 @@ public class QiandaoController {
 			try {
 				student_table table=stuDao.findByPhone(temp2.stu_phone);
 				temp2.stu_id=table.getStuid();
-				temp2.stu_name=table.getClass();
+				temp2.stu_name=table.getStuname();
 				temp2.pic_id=table.getPic_id();
 			}catch(Exception e) {}
 		}
@@ -221,7 +221,7 @@ public class QiandaoController {
 			public String stu_id;
 			public String qd_time;
 			public String value;
-			public String pic_id;
+			public int pic_id;
 			public qdInfoTeacher(qiandao_log_table p) {
 				this.stu_phone=p.getStuphone();
 				this.qd_time=p.getQdtime();
