@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.Service.TeacherService;
+import com.example.demo.data.studentData;
 import com.example.demo.data.teacherData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,15 @@ public class TeacherController {
     @PostMapping(value = "/insertTea")
     @ResponseBody
     public int InsertTeacher(@RequestBody teacherData data){
+    	System.out.println("tes");
         return teacherService.insertTeacher(data);
     }
+    
+    @CrossOrigin
+    @PostMapping(value = "/updateTeaInfo")
+    @ResponseBody
+    public int updateTeaInfo(@RequestBody teacherData data){
+        return teacherService.updateTInfo(data);
+    }
+    
 }

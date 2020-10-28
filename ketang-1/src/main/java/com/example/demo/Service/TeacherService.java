@@ -6,4 +6,6 @@ import com.example.demo.entity.user_table;
 
 public interface TeacherService {
     int insertTeacher(teacherData teaData);
+    teacherData showInfo(teacherData teaData);
+    int updateTInfo(teacherData teaData);
 }

@@ -29,6 +29,22 @@ public class StudentController {
     @PostMapping(value = "/insertStu")
     @ResponseBody
     public int InsertStudent(@RequestBody studentData data){
+		System.out.println(data.getStu_phone());
         return student.insertStudent(data);
     }
+	
+	@CrossOrigin
+    @PostMapping(value = "/updateStuInfo")
+    @ResponseBody
+    public int updateStuInfo(@RequestBody studentData data){
+		System.out.println(data.getStu_phone());
+        return student.updateSInfo(data);
+    }
+//	@CrossOrigin
+//    @PostMapping(value = "/showUserInfo")
+//    @ResponseBody
+//    public studentData showUserInfo(@RequestBody studentData data){
+//		System.out.println(data.getStu_phone());
+//        return student.showInfo(data);
+//    }
 }

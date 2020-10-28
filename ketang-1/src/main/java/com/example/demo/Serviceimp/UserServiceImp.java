@@ -97,13 +97,13 @@ public class UserServiceImp implements UserService {
 					System.out.println("检查学生信息完善？");
 					student_table st = this.student.findByPhone(u.getUserphone());
 					if(st == null)
-						return 800;
+						return 801;
 					return 400;
 				}else{
 					System.out.println("检查老师信息完善？");
 					teacher_table tea = this.teacher.findByPhone(u.getUserphone());
 					if(tea == null)
-						return 800;
+						return 802;
 					return 500;
 				}
 				
@@ -136,6 +136,13 @@ public class UserServiceImp implements UserService {
 			return 400;
 		}
 		
+	}
+
+	@Override
+	public String showIdentity(String phone) {
+		// TODO Auto-generated method stub
+		user_table t = this.userRespository.findByUserphone(phone);
+		return t.getIdentity();
 	}
 
 //	@Override
