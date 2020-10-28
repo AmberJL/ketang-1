@@ -278,7 +278,7 @@ public class HomeworkServiceimp implements HomeworkService {
 
 	//获取作业附件数量
 	public int getFileCount(String course_id,String fb_time) {
-		return fileDao.CountByCourseidAndFbtime(course_id, fb_time);
+		return fileDao.countByCourseidAndFbtime(course_id, fb_time);
 	}
 	
 	//获取提交作业附件数量
