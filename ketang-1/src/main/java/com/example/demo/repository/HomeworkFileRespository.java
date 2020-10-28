@@ -11,7 +11,7 @@ public interface HomeworkFileRespository extends JpaRepository<homework_file_tab
 	
 	public List<homework_file_table> findAllByCourseidAndFbtime(String course_id,String fb_time);
 	
-	public boolean deleteAllByCourseidAndFbtime(String course_id,String fb_time);
+	public void deleteAllByCourseidAndFbtime(String course_id,String fb_time);
 	
 	public List<homework_file_table> findAllByCourseidAndFbtimeOrderByFbtimeDesc(String course_id,String fb_time);
 	

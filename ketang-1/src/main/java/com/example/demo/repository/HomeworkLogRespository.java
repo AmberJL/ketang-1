@@ -13,7 +13,7 @@ public interface HomeworkLogRespository extends JpaRepository<homework_log_table
 	
 	public List<homework_log_table> findAllByCourseidAndFbtime(String course_id,String fb_time);
 	
-	public boolean deleteAllByCourseidAndFbtime(String course_id,String fb_time);
+	public void deleteAllByCourseidAndFbtime(String course_id,String fb_time);
 	
 	public homework_log_table findByCourseidAndFilepath(String course_id,String file_path);
 	
