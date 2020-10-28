@@ -16,5 +16,7 @@ public interface HomeworkFileRespository extends JpaRepository<homework_file_tab
 	public List<homework_file_table> findAllByCourseidAndFbtimeOrderByFbtimeDesc(String course_id,String fb_time);
 	
 	public homework_file_table findByCourseidAndFilepath(String course_id,String file_path);
+	
+	public int CountByCourseidAndFbtime(String course_id,String fb_time);
 
 }

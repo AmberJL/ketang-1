@@ -70,7 +70,12 @@ public class HomeworkController {
 		
 		String course_id=p.course_id;
 		
-		return pack.parseHomework(homeworkService.getList(course_id));
+		List<pack.homework> temp=pack.parseHomework(homeworkService.getList(course_id));
+		for(int i=0;i<temp.size();i++) {
+			pack.homework hw=temp.get(i);
+			hw.file_count=homeworkService.getFileCount(course_id, hw.fb_time)+"";
+		}
+		return temp;
 	}
 	
 	//删除作业
@@ -224,6 +229,7 @@ public class HomeworkController {
 			String jz_time;
 			String value;
 			String title;
+			String file_count;
 			public homework(homework_table p) {
 				this.fb_time=p.getFbtime();
 				this.jz_time=p.getJztime();
@@ -262,11 +268,13 @@ public class HomeworkController {
 			String stu_phone;
 			String stu_name;
 			String value;
+			String file_count;
 			public stuLogInfo(Map<String,String> p) {
 				this.stu_id=p.get("stu_id");
 				this.stu_name=p.get("name");
 				this.stu_phone=p.get("stu_phone");
 				this.value=p.get("value");
+				this.file_count=p.get("count");
 			}
 		}
 		@Data

@@ -134,7 +134,9 @@ public class HomeworkServiceimp implements HomeworkService {
 			Map<String, String> temp=new HashMap<String, String>();
 			String phone=students.get(i).getStudentphone();
 			temp.put("stu_phone",phone);
-			if(logDao.countByCourseidAndFbtimeAndStuphone(course_id, fb_time, phone)>0)
+			int count=getLogFileCount(course_id, fb_time, phone);
+			temp.put("count", count+"");
+			if(count>0)
 				temp.put("value","已提交");
 			else
 				temp.put("value","未提交");
@@ -274,4 +276,13 @@ public class HomeworkServiceimp implements HomeworkService {
 		return "删除成功";
 	}
 
+	//获取作业附件数量
+	public int getFileCount(String course_id,String fb_time) {
+		return fileDao.CountByCourseidAndFbtime(course_id, fb_time);
+	}
+	
+	//获取提交作业附件数量
+	public int getLogFileCount(String course_id,String fb_time,String stu_phone) {
+		return logDao.countByCourseidAndFbtimeAndStuphone(course_id, fb_time, stu_phone);
+	}
 }
