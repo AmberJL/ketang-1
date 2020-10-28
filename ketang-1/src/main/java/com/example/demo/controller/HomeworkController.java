@@ -27,6 +27,8 @@ import com.example.demo.entity.homework_file_table;
 import com.example.demo.entity.homework_log_table;
 import com.example.demo.entity.homework_table;
 
+import lombok.Data;
+
 @RestController
 @RequestMapping("/homework")
 public class HomeworkController {
@@ -216,6 +218,7 @@ public class HomeworkController {
 			}
 			return temp;
 		}
+		@Data
 		public static class homework{
 			String fb_time;
 			String jz_time;
@@ -228,6 +231,7 @@ public class HomeworkController {
 				this.title=p.getTitle();
 			}
 		}
+		@Data
 		public static class fileInfo{
 			String course_id;
 			String fb_time;
@@ -252,6 +256,7 @@ public class HomeworkController {
 				this.mode="stu";
 			}
 		}
+		@Data
 		public static class stuLogInfo{
 			String stu_id;
 			String stu_phone;
@@ -264,6 +269,7 @@ public class HomeworkController {
 				this.value=p.get("value");
 			}
 		}
+		@Data
 		public static class para{
 			String course_id;
 			String fb_time;

@@ -15,6 +15,8 @@ import com.example.demo.entity.qiandao_table;
 import com.example.demo.entity.student_table;
 import com.example.demo.repository.StudentRespository;
 
+import lombok.Data;
+
 @RestController
 @RequestMapping("/qiandao")
 public class QiandaoController {
@@ -139,7 +141,7 @@ public class QiandaoController {
 	}
 	//老师重置签到时间
 	@RequestMapping("/resetTime")
-	public String resetTime(pack.resetTimePara p) {
+	public String resetTime(@RequestBody pack.resetTimePara p) {
 		
 		String course_id=p.course_id;
 		String fb_time=p.fb_time;
@@ -199,6 +201,7 @@ public class QiandaoController {
 			}
 			return temp;
 		}
+		@Data
 		public static class qdListTeacher{
 			public String fb_time;
 			public String jz_time;
@@ -214,7 +217,7 @@ public class QiandaoController {
 				this.value=p.getCode();
 			}
 		}
-		
+		@Data
 		public static class qdInfoTeacher{
 			public String stu_phone;
 			public String stu_name;
@@ -228,6 +231,7 @@ public class QiandaoController {
 				this.value=p.getValue();
 			}
 		}
+		@Data
 		public static class qdListStu{
 			public String fb_time;
 			public String jz_time;
@@ -242,9 +246,11 @@ public class QiandaoController {
 				this.style=p.getCode();
 			}
 		}
+		@Data
 		public static class courseidPara{
 			public String course_id;
 		}
+		@Data
 		public static class fbqdPara{
 			public String course_id;
 			public String name;
@@ -252,20 +258,24 @@ public class QiandaoController {
 			public long jz_long;
 			public String gps;
 		}
+		@Data
 		public static class courseidTimePara{
 			public String course_id;
 			public String fb_time;
 		}
+		@Data
 		public static class courseidPhonePara{
 			public String student_phone;
 			public String course_id;
 		}
+		@Data
 		public static class changePara{
 			public String course_id;
 			public String fb_time;
 			public String student_phone;
 			public String value;
 		}
+		@Data
 		public static class qdPara{
 			public String student_phone;
 			public String course_id;
@@ -273,6 +283,7 @@ public class QiandaoController {
 			public String code;
 			public String gps;
 		}
+		@Data
 		public static class resetTimePara{
 			public String course_id;
 			public String fb_time;
