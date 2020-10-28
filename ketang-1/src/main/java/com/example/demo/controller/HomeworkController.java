@@ -69,11 +69,20 @@ public class HomeworkController {
 	public List<?> getList(@RequestBody pack.para p) {
 		
 		String course_id=p.course_id;
+		String stu_phone=p.stu_phone;
+		
+		boolean isTea;
+		if(stu_phone==null)isTea=true;
+		else isTea=false;
 		
 		List<pack.homework> temp=pack.parseHomework(homeworkService.getList(course_id));
 		for(int i=0;i<temp.size();i++) {
 			pack.homework hw=temp.get(i);
 			hw.file_count=homeworkService.getFileCount(course_id, hw.fb_time)+"";
+			if(isTea)
+				hw.commit=homeworkService.getLogSize(course_id, hw.fb_time);
+			else
+				hw.commit=homeworkService.isLogged(course_id, hw.fb_time, stu_phone);
 		}
 		return temp;
 	}
@@ -230,6 +239,7 @@ public class HomeworkController {
 			String value;
 			String title;
 			String file_count;
+			String commit;
 			public homework(homework_table p) {
 				this.fb_time=p.getFbtime();
 				this.jz_time=p.getJztime();

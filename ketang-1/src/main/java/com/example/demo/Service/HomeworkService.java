@@ -44,11 +44,14 @@ public interface HomeworkService {
 	public String getName(String course_id, String file_id, String mode);
 
 	//获取提交人数
-	public int getLogSize(String course_id, String fb_time);
+	public String getLogSize(String course_id, String fb_time);
 	
 	//获取作业附件数量
 	public int getFileCount(String course_id,String fb_time);
 	
 	//获取提交作业附件数量
 	public int getLogFileCount(String course_id,String fb_time,String stu_phone);
+
+	//学生是否提交作业
+	public String isLogged(String course_id, String fb_time, String stu_phone);
 }

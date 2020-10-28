@@ -159,17 +159,25 @@ public class HomeworkServiceimp implements HomeworkService {
 	
 	//获取提交作业人数
 	@Override
-	public int getLogSize(String course_id, String fb_time) {
+	public String getLogSize(String course_id, String fb_time) {
 		int size=0;
 		List<course_log_table> students=getStudents(course_id);
 		for(int i=0;i<students.size();i++) {
 			if(logDao.countByCourseidAndFbtimeAndStuphone(course_id, fb_time, students.get(i).getStudentphone())>0)size++;
 		}
-		return size;
+		return size+"/"+students.size();
 	}
 	
 	private List<course_log_table> getStudents(String course_id){
 		return cLogDao.findAllByCourseid(course_id);
+	}
+	
+	//学生是否提交作业
+	@Override
+	public String isLogged(String course_id,String fb_time,String stu_phone) {
+		int size=getLogFileCount(course_id,fb_time,stu_phone);
+		if(size>0)return "已提交";
+		else return"未提交";
 	}
 
 	//获取学生提交的文件列表
