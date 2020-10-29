@@ -118,6 +118,7 @@ public class HomeworkController {
 	}
 	
 	//获取提交详情
+	@RequestMapping("/getLog")
 	public List<?> getLog(@RequestBody pack.para p) {
 		
 		String course_id=p.course_id;
