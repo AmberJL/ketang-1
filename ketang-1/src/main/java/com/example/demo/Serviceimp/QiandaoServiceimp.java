@@ -114,8 +114,8 @@ public class QiandaoServiceimp implements QiandaoService {
 			temp.setCourseid(course_id);
 			temp.setFbtime(fb_time);
 			temp.setStuphone(student_phone);
-			temp.setValue(value);
 		}
+		temp.setValue(value);
 		qdLogDao.save(temp);
 		return "修改成功";
 	}
