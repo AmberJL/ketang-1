@@ -21,10 +21,10 @@ public class Login implements Runnable{
 			String type=temp[0],course_id=temp[1],phone=temp[2];
 			
 			if("Player".equals(type)) {
-				System.out.println("���Ŷ�_�γ�id:"+course_id+"_ID:"+phone);
+				System.out.println("播放端_课程id:"+course_id+"_ID:"+phone);
 				playerLogin(course_id,phone);
 			}else if("Pusher".equals(type)) {
-				System.out.println("������_�γ�id:"+course_id+"_ID:"+phone);
+				System.out.println("推送器_课程id:"+course_id+"_ID:"+phone);
 				pusherLogin(course_id,phone);
 			}
 			
