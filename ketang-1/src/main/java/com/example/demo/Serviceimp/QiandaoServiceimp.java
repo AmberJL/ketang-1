@@ -67,7 +67,11 @@ public class QiandaoServiceimp implements QiandaoService {
 	//老师获取单次签到人数
 	@Override
 	public String getSize(String course_id, String fb_time) {
-		return qdLogDao.countByCourseidAndFbtimeAndValue(course_id,fb_time,"已签到")+"/"+cLogDao.countByCourseid(course_id);
+		int size=0;
+		size+=qdLogDao.countByCourseidAndFbtimeAndValue(course_id,fb_time,"已签到");
+		size+=qdLogDao.countByCourseidAndFbtimeAndValue(course_id,fb_time,"迟到");
+		size+=qdLogDao.countByCourseidAndFbtimeAndValue(course_id,fb_time,"请假");
+		return size +"/"+cLogDao.countByCourseid(course_id);
 	}
 	
 	//老师获取单次签到详情
